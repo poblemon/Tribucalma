@@ -1,7 +1,7 @@
 // Vercel Serverless Function — Proxy para Wilson Chat (OpenRouter)
-// Esta función evita exponer la API Key en el frontend
+// La API Key se lee desde variable de entorno (Settings → Environment Variables)
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
     // Solo aceptamos POST
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
@@ -45,6 +45,7 @@ export default async function handler(req, res) {
 
         if (!response.ok) {
             const errorText = await response.text();
+            console.error('OpenRouter error:', response.status, errorText);
             return res.status(response.status).json({
                 error: `OpenRouter error: ${response.status}`,
                 details: errorText
@@ -64,5 +65,5 @@ export default async function handler(req, res) {
         console.error('Proxy Error:', error);
         return res.status(500).json({ error: 'Error interno del servidor' });
     }
-}
+};
 
