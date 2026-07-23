@@ -14,11 +14,11 @@ module.exports = async (req, res) => {
     }
 
     // Obtener la API Key desde variable de entorno de Vercel
-    const apiKey = process.env.OPENROUTER_KEY;
+    const apiKey = process.env.API_KEY || process.env.OPENROUTER_KEY;
 
     if (!apiKey) {
         return res.status(500).json({
-            error: 'API Key no configurada. Ve a Vercel → Settings → Environment Variables y agrega OPENROUTER_KEY'
+            error: 'API Key no configurada. Ve a Vercel → Settings → Environment Variables y agrega API_KEY'
         });
     }
 
