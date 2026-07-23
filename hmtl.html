@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TribuCalma - Espacio Seguro y Citas para Niños Neurodivergentes | ITIL 4</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Lexend -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Lexend', sans-serif; background-color: #FAF6F0; color: #2D3748; transition: all 0.3s ease; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #FAF6F0; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+        .high-contrast { background-color: #111827 !important; color: #F9FAFB !important; }
+        .high-contrast .bg-card, .high-contrast .bg-white, .high-contrast .bg-slate-50, .high-contrast .bg-indigo-50,
+        .high-contrast .bg-emerald-50, .high-contrast .bg-amber-50, .high-contrast .bg-rose-50 {
+            background-color: #1F2937 !important; border-color: #D1D5DB !important; color: #F9FAFB !important;
+        }
+        .high-contrast p, .high-contrast span, .high-contrast label, .high-contrast h1, .high-contrast h2, .high-contrast h3, .high-contrast h4 { color: #FFFFFF !important; }
+        .high-contrast button, .high-contrast select, .high-contrast input, .high-contrast textarea {
+            background-color: #374151 !important; color: #FFFFFF !important; border: 2px solid #FFFFFF !important;
+        }
+        .high-contrast a { color: #38BDF8 !important; }
+        .large-text p, .large-text li, .large-text span { font-size: 1.15rem !important; line-height: 1.8 !important; }
+        .large-text h2 { font-size: 2.25rem !important; }
+        .large-text h3 { font-size: 1.75rem !important; }
+        @keyframes gentlePulse { 0%, 100% { transform: scale(1); opacity: 0.95; } 50% { transform: scale(1.02); opacity: 1; } }
+        .pulse-gentle { animation: gentlePulse 4s infinite ease-in-out; }
+        .itil-badge { background: linear-gradient(135deg, #EEF2FF, #E0E7FF); border: 1px solid #C7D2FE; }
+        .itil-tag { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; }
+        .priority-critical { border-left: 4px solid #DC2626; }
+        .priority-high { border-left: 4px solid #F97316; }
+        .priority-medium { border-left: 4px solid #EAB308; }
+        .priority-low { border-left: 4px solid #22C55E; }
+        .sla-meter { height: 6px; border-radius: 3px; background: #E2E8F0; overflow: hidden; }
+        .sla-meter-fill { height: 100%; border-radius: 3px; transition: width 1s ease; }
+    </style>
+</head>
+<body class="selection:bg-indigo-200 selection:text-indigo-900 overflow-x-hidden">
+
+    <!-- ACCESSIBILITY BAR -->
+    <div class="bg-indigo-900 text-white py-2 px-4 shadow-sm relative z-50">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+            <span class="flex items-center gap-2 text-center sm:text-left">
+                <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <strong>Estado del Servicio:</strong> Operativo &mdash; SLAs cumplidos al 98.7%
+            </span>
+            <div class="flex items-center gap-4">
+                <span class="text-indigo-200 hidden md:inline">Opciones de accesibilidad:</span>
+                <div class="flex gap-2">
+                    <button onclick="toggleAccessibility('contrast')" class="px-2.5 py-1 rounded bg-indigo-800 hover:bg-indigo-700 transition-all font-medium flex items-center gap-1"><i class="fa-solid fa-circle-half-stroke"></i> Contraste</button>
+                    <button onclick="toggleAccessibility('text-size')" class="px-2.5 py-1 rounded bg-indigo-800 hover:bg-indigo-700 transition-all font-medium flex items-center gap-1"><i class="fa-solid fa-text-height"></i> Letra Grande</button>
+                    <button onclick="playSensoryHum()" id="sound-btn" class="px-2.5 py-1 rounded bg-indigo-800 hover:bg-indigo-700 transition-all font-medium flex items-center gap-1"><i class="fa-solid fa-volume-low"></i> Ruido Blanco</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="bg-[#FAF6F0] border-b border-indigo-100/50 sticky top-0 z-40 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="h-12 w-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 transition-transform group-hover:scale-105"><i class="fa-solid fa-dove text-2xl"></i></div>
+                    <div>
+                        <span class="text-2xl font-bold text-indigo-900 tracking-tight block">TribuCalma</span>
+                        <span class="text-[11px] block font-semibold text-emerald-600 tracking-wider uppercase -mt-1.5">ITIL 4 &middot; ITSM</span>
+                    </div>
+                </a>
+                <nav class="hidden md:flex items-center gap-6">
+                    <a href="#catalogo" class="text-sm font-semibold text-indigo-900 hover:text-emerald-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-book text-[10px] text-emerald-500"></i> Cat&aacute;logo</a>
+                    <a href="#slas" class="text-sm font-semibold text-indigo-900 hover:text-emerald-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-file-contract text-[10px] text-emerald-500"></i> SLAs</a>
+                    <a href="#solicitudes" class="text-sm font-semibold text-indigo-900 hover:text-emerald-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-ticket text-[10px] text-emerald-500"></i> Solicitudes</a>
+                    <a href="#incidentes" class="text-sm font-semibold text-indigo-900 hover:text-emerald-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-bug text-[10px] text-emerald-500"></i> Incidentes</a>
+                    <a href="#cambios" class="text-sm font-semibold text-indigo-900 hover:text-emerald-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-arrows-rotate text-[10px] text-emerald-500"></i> Cambios</a>
+                    <a href="#mejora" class="text-sm font-semibold text-indigo-900 hover:text-emerald-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-chart-line text-[10px] text-emerald-500"></i> Mejora</a>
+                    <a href="itil4-documentacion.html" target="_blank" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors flex items-center gap-1 border-l-2 border-indigo-200 pl-4"><i class="fa-solid fa-graduation-cap text-[10px]"></i> ITIL 4 Guide</a>
+                </nav>
+                <a href="#solicitudes" class="inline-flex items-center justify-center px-5 py-2.5 rounded-full text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 transition-all shadow-md shadow-emerald-600/10"><i class="fa-regular fa-calendar-check mr-2"></i> Solicitar Cita</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="relative overflow-hidden py-16 sm:py-24 bg-gradient-to-b from-indigo-50/40 via-[#FAF6F0] to-[#FAF6F0]">
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-emerald-100/40 rounded-full blur-3xl"></div>
+        <div class="absolute top-40 right-10 w-80 h-80 bg-purple-100/30 rounded-full blur-3xl"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 space-y-6 text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100/80 border border-emerald-200 text-xs font-semibold text-emerald-800"><i class="fa-solid fa-heart-pulse"></i> ITSM con empat&iacute;a &middot; Marco ITIL 4</div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-indigo-950">Gesti&oacute;n de Servicios con <span class="text-emerald-600">coraz&oacute;n humano</span>.</h1>
+                    <p class="text-lg text-slate-600 leading-relaxed max-w-2xl font-light">En <strong>TribuCalma</strong> aplicamos el marco <strong>ITIL 4</strong> para brindar servicios de terapia neurodivergente con <strong>calidad, confiabilidad y mejora continua</strong>. Cada interacci&oacute;n sigue el Sistema de Valor del Servicio (SVS).</p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <a href="#solicitudes" class="px-6 py-3.5 rounded-full font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition-all text-sm shadow-md"><i class="fa-regular fa-calendar mr-1.5"></i> Solicitar servicio</a>
+                        <a href="#catalogo" class="px-6 py-3.5 rounded-full font-bold bg-white hover:bg-indigo-50 border border-indigo-100 text-indigo-900 transition-all text-sm">Ver cat&aacute;logo de servicios</a>
+                    </div>
+                </div>
+                <div class="lg:col-span-5">
+                    <div class="bg-white border border-indigo-50 rounded-3xl p-6 sm:p-8 shadow-xl shadow-indigo-100/30 relative pulse-gentle">
+                        <div class="absolute -top-3 -right-3 h-10 w-10 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center shadow-md"><i class="fa-solid fa-sun text-lg"></i></div>
+                        <h3 class="text-xl font-bold text-indigo-950 mb-3 flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-500"></i> SVS &mdash; Sistema de Valor</h3>
+                        <div class="space-y-3">
+                            <div class="flex gap-3 items-start">
+                                <span class="h-6 w-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs mt-1 shrink-0"><i class="fa-solid fa-check"></i></span>
+                                <div>
+                                    <h4 class="text-sm font-bold text-indigo-950">Principio: Enfocarse en el Valor</h4>
+                                    <p class="text-xs text-slate-500">Cada servicio est&aacute; dise&ntilde;ado para crear valor real en la vida de tu hijo.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 items-start">
+                                <span class="h-6 w-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs mt-1 shrink-0"><i class="fa-solid fa-check"></i></span>
+                                <div>
+                                    <h4 class="text-sm font-bold text-indigo-950">SLA Garantizado</h4>
+                                    <p class="text-xs text-slate-500">Respuesta a consultas en menos de 2 horas h&aacute;biles. Sesiones de 45 min con 15 min de transici&oacute;n.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 items-start">
+                                <span class="h-6 w-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs mt-1 shrink-0"><i class="fa-solid fa-check"></i></span>
+                                <div>
+                                    <h4 class="text-sm font-bold text-indigo-950">Mejora Continua (CSI)</h4>
+                                    <p class="text-xs text-slate-500">Feedback post-sesi&oacute;n para optimizar cada experiencia. Tasa de satisfacci&oacute;n: 96%.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATALOGO DE SERVICIOS -->
+    <section id="catalogo" class="py-20 bg-white transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider itil-tag"><i class="fa-solid fa-book"></i> ITIL &middot; Cat&aacute;logo de Servicios</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-indigo-950 tracking-tight mt-3">Servicios Terap&eacute;uticos con Acuerdos de Nivel</h2>
+                <p class="text-slate-500 text-base mt-3 font-light">Cada servicio incluye <strong>SLA (Service Level Agreement)</strong> definido. Selecciona para ver detalles y m&eacute;tricas de calidad.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div onclick="toggleServiceDetail('sensory')" class="cursor-pointer group bg-[#FAF6F0] border border-indigo-50 rounded-2xl p-6 hover:border-emerald-500/50 hover:shadow-lg transition-all relative overflow-hidden" id="card-sensory">
+                    <span class="absolute top-0 right-0 itil-badge text-[9px] px-2 py-0.5 rounded-bl-xl text-indigo-700 font-bold">SLA 98%</span>
+                    <div class="h-12 w-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition-transform"><i class="fa-solid fa-hand-sparkles"></i></div>
+                    <h3 class="text-lg font-bold text-indigo-950 mb-2">Integraci&oacute;n Sensorial</h3>
+                    <p class="text-xs text-slate-500 line-clamp-3">Regulaci&oacute;n t&aacute;ctil, vestibular y propioceptiva en sala de baja estimulaci&oacute;n.</p>
+                    <div class="mt-3"><div class="flex justify-between text-[10px] text-slate-400 mb-1"><span>Cumplimiento SLA</span><span class="font-bold text-emerald-600">98%</span></div><div class="sla-meter"><div class="sla-meter-fill bg-emerald-500" style="width:98%"></div></div></div>
+                    <div class="mt-3 flex items-center gap-1.5 text-xs text-emerald-600 font-bold group-hover:translate-x-1 transition-transform"><span>Ver servicio + SLA</span> <i class="fa-solid fa-chevron-right text-[10px]"></i></div>
+                    <div id="detail-sensory" class="hidden mt-4 pt-4 border-t border-indigo-100/50 text-xs text-slate-600 space-y-2">
+                        <p><strong>SLA:</strong> 45 min sesi&oacute;n &middot; 15 min transici&oacute;n</p>
+                        <p><strong>KPI:</strong> Tiempo de respuesta: 2h &middot; Satisfacci&oacute;n: 98%</p>
+                        <p><strong>Costo:</strong> $45/sesi&oacute;n &middot; Paquete 5: $200</p>
+                    </div>
+                </div>
+                <div onclick="toggleServiceDetail('speech')" class="cursor-pointer group bg-[#FAF6F0] border border-indigo-50 rounded-2xl p-6 hover:border-emerald-500/50 hover:shadow-lg transition-all relative overflow-hidden" id="card-speech">
+                    <span class="absolute top-0 right-0 itil-badge text-[9px] px-2 py-0.5 rounded-bl-xl text-indigo-700 font-bold">SLA 97%</span>
+                    <div class="h-12 w-12 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition-transform"><i class="fa-solid fa-comments"></i></div>
+                    <h3 class="text-lg font-bold text-indigo-950 mb-2">Lenguaje y CAA</h3>
+                    <p class="text-xs text-slate-500 line-clamp-3">Comunicaci&oacute;n verbal y aumentativa con pictogramas y tecnolog&iacute;a asistiva.</p>
+                    <div class="mt-3"><div class="flex justify-between text-[10px] text-slate-400 mb-1"><span>Cumplimiento SLA</span><span class="font-bold text-indigo-600">97%</span></div><div class="sla-meter"><div class="sla-meter-fill bg-indigo-500" style="width:97%"></div></div></div>
+                    <div class="mt-3 flex items-center gap-1.5 text-xs text-indigo-600 font-bold group-hover:translate-x-1 transition-transform"><span>Ver servicio + SLA</span> <i class="fa-solid fa-chevron-right text-[10px]"></i></div>
+                    <div id="detail-speech" class="hidden mt-4 pt-4 border-t border-indigo-100/50 text-xs text-slate-600 space-y-2">
+                        <p><strong>SLA:</strong> 45 min sesi&oacute;n &middot; Material incluido</p>
+                        <p><strong>KPI:</strong> Evaluaci&oacute;n inicial: 48h &middot; Progreso: bimestral</p>
+                        <p><strong>Costo:</strong> $50/sesi&oacute;n &middot; Paquete 5: $225</p>
+                    </div>
+                </div>
+                <div onclick="toggleServiceDetail('occupational')" class="cursor-pointer group bg-[#FAF6F0] border border-indigo-50 rounded-2xl p-6 hover:border-emerald-500/50 hover:shadow-lg transition-all relative overflow-hidden" id="card-occupational">
+                    <span class="absolute top-0 right-0 itil-badge text-[9px] px-2 py-0.5 rounded-bl-xl text-indigo-700 font-bold">SLA 96%</span>
+                    <div class="h-12 w-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition-transform"><i class="fa-solid fa-puzzle-piece"></i></div>
+                    <h3 class="text-lg font-bold text-indigo-950 mb-2">Terapia Ocupacional</h3>
+                    <p class="text-xs text-slate-500 line-clamp-3">Motricidad fina, autonom&iacute;a diaria, alimentaci&oacute;n y escritura.</p>
+                    <div class="mt-3"><div class="flex justify-between text-[10px] text-slate-400 mb-1"><span>Cumplimiento SLA</span><span class="font-bold text-amber-600">96%</span></div><div class="sla-meter"><div class="sla-meter-fill bg-amber-500" style="width:96%"></div></div></div>
+                    <div class="mt-3 flex items-center gap-1.5 text-xs text-amber-700 font-bold group-hover:translate-x-1 transition-transform"><span>Ver servicio + SLA</span> <i class="fa-solid fa-chevron-right text-[10px]"></i></div>
+                    <div id="detail-occupational" class="hidden mt-4 pt-4 border-t border-indigo-100/50 text-xs text-slate-600 space-y-2">
+                        <p><strong>SLA:</strong> 45 min sesi&oacute;n &middot; Material sensorial incluido</p>
+                        <p><strong>KPI:</strong> Evaluaci&oacute;n funcional: 72h &middot; Reporte mensual</p>
+                        <p><strong>Costo:</strong> $48/sesi&oacute;n &middot; Paquete 5: $215</p>
+                    </div>
+                </div>
+                <div onclick="toggleServiceDetail('behavioral')" class="cursor-pointer group bg-[#FAF6F0] border border-indigo-50 rounded-2xl p-6 hover:border-emerald-500/50 hover:shadow-lg transition-all relative overflow-hidden" id="card-behavioral">
+                    <span class="absolute top-0 right-0 itil-badge text-[9px] px-2 py-0.5 rounded-bl-xl text-indigo-700 font-bold">SLA 99%</span>
+                    <div class="h-12 w-12 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition-transform"><i class="fa-solid fa-shield-heart"></i></div>
+                    <h3 class="text-lg font-bold text-indigo-950 mb-2">Apoyo Socio-Emocional</h3>
+                    <p class="text-xs text-slate-500 line-clamp-3">Regulaci&oacute;n emocional, habilidades sociales y manejo de crisis.</p>
+                    <div class="mt-3"><div class="flex justify-between text-[10px] text-slate-400 mb-1"><span>Cumplimiento SLA</span><span class="font-bold text-rose-600">99%</span></div><div class="sla-meter"><div class="sla-meter-fill bg-rose-500" style="width:99%"></div></div></div>
+                    <div class="mt-3 flex items-center gap-1.5 text-xs text-rose-600 font-bold group-hover:translate-x-1 transition-transform"><span>Ver servicio + SLA</span> <i class="fa-solid fa-chevron-right text-[10px]"></i></div>
+                    <div id="detail-behavioral" class="hidden mt-4 pt-4 border-t border-indigo-100/50 text-xs text-slate-600 space-y-2">
+                        <p><strong>SLA:</strong> 50 min sesi&oacute;n &middot; Plan de crisis personalizado</p>
+                        <p><strong>KPI:</strong> Contenci&oacute;n en crisis: 15 min &middot; Seguimiento semanal</p>
+                        <p><strong>Costo:</strong> $55/sesi&oacute;n &middot; Paquete 5: $250</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 bg-indigo-50/50 rounded-2xl p-5 border border-indigo-100/50 text-sm text-center">
+                <p class="text-slate-600"><i class="fa-solid fa-circle-info text-indigo-500 mr-1.5"></i> Dudas sobre qu&eacute; servicio elegir? <button onclick="toggleWilsonChat()" class="text-emerald-600 font-bold hover:underline">Habla con Wilson</button>, nuestro Service Desk especializado.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLAs -->
+    <section id="slas" class="py-20 bg-[#FAF6F0] border-t border-indigo-100/50 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-bold uppercase tracking-wider itil-tag"><i class="fa-solid fa-file-contract"></i> ITIL &middot; SLM (Service Level Management)</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-indigo-950 tracking-tight mt-3">Acuerdos de Nivel de Servicio (SLA)</h2>
+                <p class="text-slate-500 text-base mt-3 font-light">Nuestros compromisos formales de calidad. Monitoreamos y reportamos cada m&eacute;trica.</p>
+            </div>
+            <div class="grid lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-2xl p-6 border border-indigo-50 shadow-sm hover:shadow-md transition-all">
+                    <div class="flex items-center gap-3 mb-4"><span class="h-10 w-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">⏱</span><div><h4 class="font-bold text-indigo-950">Tiempo de Respuesta</h4><span class="text-[10px] text-emerald-600 font-bold">SLA CR&Iacute;TICO</span></div></div>
+                    <div class="space-y-3 text-xs">
+                        <div class="flex justify-between items-center"><span class="text-slate-500">Consultas generales</span><span class="font-bold text-indigo-950">< 2h h&aacute;biles</span></div>
+                        <div class="flex justify-between items-center"><span class="text-slate-500">Incidentes cr&iacute;ticos</span><span class="font-bold text-indigo-950">15 min</span></div>
+                        <div class="flex justify-between items-center"><span class="text-slate-500">Solicitudes de cita</span><span class="font-bold text-indigo-950">< 1h h&aacute;bil</span></div>
+                        <div class="mt-3 pt-3 border-t border-indigo-50"><div class="flex justify-between text-[10px] text-slate-400 mb-1"><span>Cumplimiento general</span><span class="font-bold text-emerald-600">98.7%</span></div><div class="sla-meter"><div class="sla-meter-fill bg-emerald-500" style="width:98.7%"></div></div></div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl p-6 border border-indigo-50 shadow-sm hover:shadow-md transition-all">
+                    <div class="flex items-center gap-3 mb-4"><span class="h-10 w-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center">📋</span><div><h4 class="font-bold text-indigo-950">Gesti&oacute;n de Solicitudes</h4><span class="text-[10px] text-indigo-600 font-bold">REQUEST FULFILLMENT</span></div></div>
+                    <div class="space-y-3 text-xs">
+                        <div class="flex justify-between items-center"><span class="text-slate-500">Confirmaci&oacute;n de cita</span><span class="font-bold text-indigo-950">30 min</span></div>
+                        <div class="flex justify-between items-center"><span class="text-slate-500">Recordatorio pre-cita</span><span class="font-bold text-indigo-950">24h antes</span></div>
+                        <div class="flex justify-between items-center"><span class="text-slate-500">Historia social digital</span><span class="font-bold text-indigo-950">48h antes</span></div>
+                        <div class="mt-3 pt-3 border-t border-indigo-50"><div class="flex justify-between text-[10px] text-slate-400 mb-1"><span>Cumplimiento</span><span class="font-bold text-indigo-600">99.2%</span></div><div class="sla-meter"><div class="sla-meter-fill bg-indigo-500" style="width:99.2%"></div></div></div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl p-6 border border-indigo-50 shadow-sm hover:shadow-md transition-all">
+                    <div class="flex items-center gap-3 mb-4"><span class="h-10 w-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">🔄</span><div><h4 class="font-bold text-indigo-950">Gesti&oacute;n de Cambios</h4><span class="text-[10px] text-amber-600 font-bold">CHANGE MANAGEMENT</span></div></div>
+                    <div class="space-y-3 text-xs">
+                        <div class="flex justify-between items-center"><span class="text-slate-500">Reprogramaci&oacute;n (Cambio Normal)</span><span class="font-bold text-indigo-950">24h aviso</span></div>
+                        <div class="flex justify-between items-center"><span class="text-slate-500">Cancelaci&oacute;n (Cambio Emergencia)</span><span class="font-bold text-indigo-950">2h aviso</span></div>
+                        <div class="flex justify-between items-center"><span class="text-slate-500">Cambio de terapeuta</span><span class="font-bold text-indigo-950">48h aviso</span></div>
+                        <div class="mt-3 pt-3 border-t border-indigo-50"><div class="flex justify-between text-[10px] text-slate-400 mb-1"><span>Cumplimiento</span><span class="font-bold text-amber-600">97.5%</span></div><div class="sla-meter"><div class="sla-meter-fill bg-amber-500" style="width:97.5%"></div></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 grid md:grid-cols-2 gap-4 text-xs">
+                <div class="bg-white rounded-xl p-4 border border-indigo-50 flex items-start gap-3"><span class="h-8 w-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center shrink-0">🤝</span><div><h4 class="font-bold text-indigo-950 mb-1">OLA &mdash; Operational Level Agreement</h4><p class="text-slate-500">Nuestro equipo interno garantiza coordinaci&oacute;n entre terapeutas, administrativos y soporte t&eacute;cnico en menos de 1 hora.</p></div></div>
+                <div class="bg-white rounded-xl p-4 border border-indigo-50 flex items-start gap-3"><span class="h-8 w-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center shrink-0">📄</span><div><h4 class="font-bold text-indigo-950 mb-1">UC &mdash; Underpinning Contract</h4><p class="text-slate-500">Nuestros proveedores de materiales sensoriales y tecnolog&iacute;a asistiva cumplen con est&aacute;ndares de entrega NPS 9+.</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOLICITUDES (Request Fulfillment) -->
+    <section id="solicitudes" class="py-20 bg-white transition-colors duration-300">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase itil-tag"><i class="fa-solid fa-ticket mr-1.5"></i> ITIL &middot; Request Fulfillment</span>
+                <h2 class="text-3xl font-extrabold text-indigo-950 tracking-tight mt-2">Portal de Solicitudes de Servicio</h2>
+                <p class="text-slate-500 text-sm mt-2">Gestionamos tu solicitud como un proceso ITIL. Recibir&aacute;s un <strong>Ticket ID</strong> y confirmaci&oacute;n dentro del SLA establecido.</p>
+            </div>
+            <div class="bg-white border border-indigo-50 rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden">
+                <div class="grid grid-cols-3 gap-2 mb-8 border-b border-indigo-50/50 pb-6 text-center">
+                    <div id="step-tab-1" class="border-b-2 border-emerald-500 pb-2 text-emerald-600 font-bold text-xs sm:text-sm">1. Servicio</div>
+                    <div id="step-tab-2" class="border-b-2 border-transparent pb-2 text-slate-400 font-bold text-xs sm:text-sm">2. Agenda + SLA</div>
+                    <div id="step-tab-3" class="border-b-2 border-transparent pb-2 text-slate-400 font-bold text-xs sm:text-sm">3. Datos + Confirmaci&oacute;n</div>
+                </div>
+                <div id="booking-step-1" class="space-y-4">
+                    <div class="flex items-center justify-between mb-2"><h3 class="text-base font-bold text-indigo-950">Selecciona el servicio solicitado:</h3><span class="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-1 rounded-full font-bold">Ticket ID: <span id="ticket-id-preview">#TC-</span></span></div>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div onclick="selectService('Integracion Sensorial', 'Sesion de juego sensorial y regulacion')" class="service-option cursor-pointer bg-[#FAF6F0] border-2 border-emerald-500 rounded-2xl p-5 hover:border-emerald-500 transition-all flex flex-col justify-between" id="srv-opt-sensory"><div><span class="h-8 w-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center text-sm mb-3"><i class="fa-solid fa-hand-sparkles"></i></span><h4 class="font-bold text-indigo-950 text-sm">Integraci&oacute;n Sensorial</h4><p class="text-slate-500 text-xs mt-1">SLA: 45 min &middot; $45/sesi&oacute;n</p></div><div class="mt-4 pt-3 border-t border-indigo-100/40 text-[11px] text-emerald-600 font-bold flex justify-between items-center"><span>SLA 98%</span><span class="badge-sel">Seleccionado</span></div></div>
+                        <div onclick="selectService('Lenguaje y CAA', 'Soporte comunicacional')" class="service-option cursor-pointer bg-[#FAF6F0] border-2 border-transparent rounded-2xl p-5 hover:border-emerald-500/50 transition-all flex flex-col justify-between" id="srv-opt-speech"><div><span class="h-8 w-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm mb-3"><i class="fa-solid fa-comments"></i></span><h4 class="font-bold text-indigo-950 text-sm">Lenguaje y CAA</h4><p class="text-slate-500 text-xs mt-1">SLA: 45 min &middot; $50/sesi&oacute;n</p></div><div class="mt-4 pt-3 border-t border-indigo-100/40 text-[11px] text-indigo-600 font-bold flex justify-between items-center"><span>SLA 97%</span><span class="badge-sel hidden">Elegir</span></div></div>
+                        <div onclick="selectService('Acompanamiento Ocupacional', 'Habilidades de autonomia')" class="service-option cursor-pointer bg-[#FAF6F0] border-2 border-transparent rounded-2xl p-5 hover:border-emerald-500/50 transition-all flex flex-col justify-between" id="srv-opt-occupational"><div><span class="h-8 w-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-sm mb-3"><i class="fa-solid fa-puzzle-piece"></i></span><h4 class="font-bold text-indigo-950 text-sm">Terapia Ocupacional</h4><p class="text-slate-500 text-xs mt-1">SLA: 45 min &middot; $48/sesi&oacute;n</p></div><div class="mt-4 pt-3 border-t border-indigo-100/40 text-[11px] text-amber-700 font-bold flex justify-between items-center"><span>SLA 96%</span><span class="badge-sel hidden">Elegir</span></div></div>
+                    </div>
+                    <div class="p-4 bg-indigo-50/50 rounded-2xl border border-indigo-100/50 mt-4"><p class="text-xs font-bold text-indigo-950 mb-2 flex items-center gap-1.5"><i class="fa-solid fa-sliders text-indigo-600"></i> Atributos de la solicitud:</p><div class="grid sm:grid-cols-2 gap-2 text-xs"><label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="pref-light" class="rounded text-emerald-600 focus:ring-0"><span>Luces c&aacute;lidas/bajas</span></label><label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="pref-sound" class="rounded text-emerald-600 focus:ring-0"><span>Sin m&uacute;sica de fondo</span></label></div></div>
+                    <div class="flex justify-end pt-4"><button onclick="goToStep(2)" class="px-6 py-2.5 rounded-full text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 transition-all flex items-center gap-2">Continuar a Agenda <i class="fa-solid fa-arrow-right"></i></button></div>
+                </div>
+                <div id="booking-step-2" class="space-y-4 hidden">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div><label class="block text-xs font-bold text-indigo-950 uppercase tracking-wider mb-2">Fecha de la Solicitud</label><input type="date" id="booking-date" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-sm focus:border-emerald-500 focus:ring-0" value="2026-07-21" min="2026-07-20"><p class="text-[11px] text-slate-400 italic mt-1">Disponibilidad L-V 8AM-7PM &middot; S 9AM-2PM</p></div>
+                        <div><label class="block text-xs font-bold text-indigo-950 uppercase tracking-wider mb-2">Horario Solicitado</label><select id="booking-time" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-sm focus:border-emerald-500 focus:ring-0"><option value="09:00 AM">09:00 AM &mdash; Franja matutina</option><option value="11:00 AM">11:00 AM &mdash; Sensorial amigable</option><option value="03:30 PM">03:30 PM &mdash; Tarde de juego</option><option value="05:00 PM">05:00 PM &mdash; &Uacute;ltimo turno</option></select></div>
+                    </div>
+                    <div class="bg-emerald-50 rounded-xl p-4 border border-emerald-100 text-xs"><div class="flex items-start gap-3"><span class="h-8 w-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 text-sm">📋</span><div><h4 class="font-bold text-emerald-900">SLA de esta Solicitud</h4><p class="text-emerald-700 mt-1">Confirmaci&oacute;n en < 30 min &middot; Recordatorio 24h antes &middot; Historia social 48h antes</p></div></div></div>
+                    <div class="flex justify-between pt-4 border-t border-indigo-50/50"><button onclick="goToStep(1)" class="px-5 py-2 rounded-full text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all">Atr&aacute;s</button><button onclick="goToStep(3)" class="px-6 py-2.5 rounded-full text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 transition-all">Siguiente &rarr; Datos</button></div>
+                </div>
+                <div id="booking-step-3" class="space-y-4 hidden">
+                    <h3 class="text-base font-bold text-indigo-950">Datos del Solicitante:</h3>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div><label class="block text-xs font-semibold text-slate-500 mb-1">Nombre Completo</label><input type="text" id="parent-name" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-xs focus:border-emerald-500 focus:ring-0" placeholder="Ej. Mariana Gonzalez"></div>
+                        <div><label class="block text-xs font-semibold text-slate-500 mb-1">Nombre y edad del paciente</label><input type="text" id="child-desc" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-xs focus:border-emerald-500 focus:ring-0" placeholder="Ej. Mateo, 6 anos"></div>
+                        <div><label class="block text-xs font-semibold text-slate-500 mb-1">Correo Electr&oacute;nico</label><input type="email" id="parent-email" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-xs focus:border-emerald-500 focus:ring-0" placeholder="mariana@gmail.com"></div>
+                        <div><label class="block text-xs font-semibold text-slate-500 mb-1">Notas / Requerimientos</label><textarea id="child-notes" rows="2" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-xs focus:border-emerald-500 focus:ring-0" placeholder="Ej. Le molestan los ruidos metalicos."></textarea></div>
+                    </div>
+                    <div class="bg-[#FAF6F0] p-4 rounded-2xl border border-indigo-100/50 mt-4 text-xs"><h4 class="font-bold text-indigo-950 mb-2 flex items-center gap-2"><i class="fa-solid fa-receipt text-emerald-600"></i> Resumen de Solicitud:</h4><div class="grid grid-cols-2 sm:grid-cols-4 gap-4"><div><span class="text-slate-400 block">Servicio:</span><span class="font-bold text-indigo-950" id="sum-srv">Integraci&oacute;n Sensorial</span></div><div><span class="text-slate-400 block">Agenda:</span><span class="font-bold text-indigo-950" id="sum-time">2026-07-21, 11:00 AM</span></div><div><span class="text-slate-400 block">Paciente:</span><span class="font-bold text-indigo-950" id="sum-child">No especificado</span></div><div><span class="text-slate-400 block">Ajustes:</span><span class="font-bold text-emerald-600" id="sum-pref">Por defecto</span></div></div></div>
+                    <div class="bg-indigo-50 rounded-xl p-3 border border-indigo-100 text-[11px] flex items-start gap-2"><i class="fa-solid fa-shield-halved text-indigo-600 mt-0.5"></i><span class="text-indigo-800">Al confirmar, aceptas nuestros <strong>SLAs</strong> y pol&iacute;ticas de Gesti&oacute;n de Cambios.</span></div>
+                    <div class="flex justify-between pt-4 border-t border-indigo-50/50"><button onclick="goToStep(2)" class="px-5 py-2 rounded-full text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all">Atr&aacute;s</button><button onclick="confirmBooking()" class="px-6 py-2.5 rounded-full text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 transition-all shadow-md shadow-emerald-600/10"><i class="fa-solid fa-check-circle mr-1"></i> Confirmar Solicitud</button></div>
+                </div>
+                <div id="booking-success" class="hidden text-center py-10 space-y-6">
+                    <div class="h-16 w-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto"><i class="fa-solid fa-heart-circle-check"></i></div>
+                    <div><h3 class="text-2xl font-bold text-indigo-950">Solicitud Registrada (Request Fulfilled)</h3><p class="text-slate-500 text-sm mt-1 max-w-md mx-auto">Tu solicitud ha sido ingresada en nuestro sistema. Recibir&aacute;s confirmaci&oacute;n seg&uacute;n nuestro SLA.</p></div>
+                    <div class="bg-[#FAF6F0] p-6 rounded-2xl border border-indigo-50 max-w-md mx-auto text-left space-y-2 text-xs"><div class="flex justify-between"><span class="text-slate-400">Ticket ID:</span><span class="font-mono text-emerald-600 font-bold" id="succ-code">#TC-3928</span></div><div class="flex justify-between"><span class="text-slate-400">Solicitante:</span><span class="font-bold text-indigo-950" id="succ-parent">Mariana</span></div><div class="flex justify-between"><span class="text-slate-400">Paciente:</span><span class="font-bold text-indigo-950" id="succ-child">Mateo</span></div><div class="flex justify-between"><span class="text-slate-400">Fecha y Hora:</span><span class="font-bold text-indigo-950" id="succ-time">2026-07-21, 11:00 AM</span></div><div class="flex justify-between pt-2 border-t border-indigo-50"><span class="text-slate-400">SLA Aplicado:</span><span class="font-bold text-emerald-600">Confirmaci&oacute;n < 30 min</span></div></div>
+                    <button onclick="resetBooking()" class="px-5 py-2.5 bg-indigo-900 hover:bg-indigo-800 text-white rounded-full text-xs font-bold transition-all"><i class="fa-solid fa-plus mr-1"></i> Nueva Solicitud</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INCIDENTES -->
+    <section id="incidentes" class="py-20 bg-[#FAF6F0] border-t border-indigo-100/50 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="px-3 py-1 rounded-full bg-rose-100 text-rose-800 text-xs font-bold uppercase tracking-wider itil-tag"><i class="fa-solid fa-bug"></i> ITIL &middot; Gesti&oacute;n de Incidentes</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-indigo-950 tracking-tight mt-3">Reportar un Incidente</h2>
+                <p class="text-slate-500 text-base mt-3 font-light">Ocurri&oacute; algo durante tu experiencia? Rep&oacute;rtalo y lo gestionamos con nuestra matriz de prioridades.</p>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-2xl p-6 sm:p-8 border border-indigo-50 shadow-md">
+                    <h3 class="font-bold text-indigo-950 text-base mb-4 flex items-center gap-2"><i class="fa-solid fa-pen-to-square text-rose-500"></i> Formulario de Incidente</h3>
+                    <div class="space-y-4 text-xs">
+                        <div><label class="block text-xs font-semibold text-slate-500 mb-1">Categor&iacute;a del Incidente *</label><select id="incident-category" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-sm focus:border-rose-500 focus:ring-0"><option value="">Selecciona una categor&iacute;a...</option><option value="retraso">Retraso en atenci&oacute;n</option><option value="comunicacion">Problema de comunicaci&oacute;n</option><option value="instalaciones">Inconveniente en instalaciones</option><option value="terapeuta">Inconveniente con terapeuta</option><option value="facturacion">Problema de facturaci&oacute;n</option><option value="otro">Otro</option></select></div>
+                        <div><label class="block text-xs font-semibold text-slate-500 mb-1">Prioridad *</label><select id="incident-priority" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-sm focus:border-rose-500 focus:ring-0" onchange="updatePriorityVisual()"><option value="baja">Baja &mdash; Consulta menor</option><option value="media" selected>Media &mdash; Afecta experiencia</option><option value="alta">Alta &mdash; Servicio interrumpido</option><option value="critica">Cr&iacute;tica &mdash; Riesgo/seguridad</option></select></div>
+                        <div><label class="block text-xs font-semibold text-slate-500 mb-1">Descripci&oacute;n del Incidente *</label><textarea id="incident-desc" rows="3" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-sm focus:border-rose-500 focus:ring-0" placeholder="Describe que ocurrio, cuando y como te afecto..."></textarea></div>
+                        <div><label class="block text-xs font-semibold text-slate-500 mb-1">Ticket ID de referencia (opcional)</label><input type="text" id="incident-ticket" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-sm focus:border-rose-500 focus:ring-0" placeholder="#TC-XXXX"></div>
+                        <div id="priority-visual" class="priority-medium bg-slate-50 rounded-xl p-3 text-xs flex items-center gap-2"><i class="fa-solid fa-circle-exclamation"></i><span>Prioridad seleccionada: <strong id="priority-label">Media</strong> &mdash; Tiempo de respuesta SLA: <strong id="priority-sla">4 horas</strong></span></div>
+                        <button onclick="reportIncident()" class="w-full px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-full text-sm font-bold transition-all shadow-md"><i class="fa-solid fa-bug mr-1.5"></i> Reportar Incidente</button>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-white rounded-2xl p-6 border border-indigo-50 shadow-sm"><h4 class="font-bold text-indigo-950 text-sm mb-3">Matriz de Prioridades</h4><div class="space-y-2 text-xs"><div class="priority-critical bg-red-50 rounded-lg p-3 flex justify-between"><span class="font-bold text-red-800">Cr&iacute;tica</span><span class="text-red-600">Respuesta: < 15 min &middot; Resoluci&oacute;n: < 1h</span></div><div class="priority-high bg-orange-50 rounded-lg p-3 flex justify-between"><span class="font-bold text-orange-800">Alta</span><span class="text-orange-600">Respuesta: < 30 min &middot; Resoluci&oacute;n: < 4h</span></div><div class="priority-medium bg-yellow-50 rounded-lg p-3 flex justify-between"><span class="font-bold text-yellow-800">Media</span><span class="text-yellow-600">Respuesta: < 2h &middot; Resoluci&oacute;n: < 24h</span></div><div class="priority-low bg-green-50 rounded-lg p-3 flex justify-between"><span class="font-bold text-green-800">Baja</span><span class="text-green-600">Respuesta: < 8h &middot; Resoluci&oacute;n: < 48h</span></div></div></div>
+                    <div class="bg-indigo-50 rounded-2xl p-5 border border-indigo-100 text-xs"><div class="flex items-start gap-3"><i class="fa-solid fa-rotate text-indigo-600 mt-0.5"></i><div><h4 class="font-bold text-indigo-950 mb-1">Proceso ITIL: Incident &rarr; Problem</h4><p class="text-slate-500">Si un incidente se repite, lo convertimos en un <strong>Problema</strong> y hacemos an&aacute;lisis de causa ra&iacute;z (RCA).</p></div></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CAMBIOS -->
+    <section id="cambios" class="py-20 bg-white transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold uppercase tracking-wider itil-tag"><i class="fa-solid fa-arrows-rotate"></i> ITIL &middot; Gesti&oacute;n de Cambios</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-indigo-950 tracking-tight mt-3">Pol&iacute;tica de Reprogramaci&oacute;n (Change Management)</h2>
+                <p class="text-slate-500 text-base mt-3 font-light">Tipos de cambio definidos seg&uacute;n ITIL 4 para gestionar modificaciones en tu servicio.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-green-50 rounded-2xl p-6 border border-green-100"><span class="text-3xl mb-3 block">✅</span><h4 class="font-bold text-indigo-950 mb-2">Cambio Est&aacute;ndar</h4><p class="text-xs text-slate-500 mb-3">Pre-aprobado, bajo riesgo, procedimiento conocido.</p><ul class="text-xs text-slate-600 space-y-1.5"><li class="flex items-center gap-2">&bull; Reprogramar con > 48h aviso</li><li class="flex items-center gap-2">&bull; Sin costo adicional</li><li class="flex items-center gap-2">&bull; Confirmaci&oacute;n autom&aacute;tica</li></ul></div>
+                <div class="bg-amber-50 rounded-2xl p-6 border border-amber-100"><span class="text-3xl mb-3 block">🔄</span><h4 class="font-bold text-indigo-950 mb-2">Cambio Normal</h4><p class="text-xs text-slate-500 mb-3">Requiere evaluaci&oacute;n por nuestro CAB.</p><ul class="text-xs text-slate-600 space-y-1.5"><li class="flex items-center gap-2">&bull; Reprogramar con < 48h aviso</li><li class="flex items-center gap-2">&bull; Cargo del 15% de la sesi&oacute;n</li><li class="flex items-center gap-2">&bull; Evaluaci&oacute;n manual</li></ul></div>
+                <div class="bg-rose-50 rounded-2xl p-6 border border-rose-100"><span class="text-3xl mb-3 block">🚨</span><h4 class="font-bold text-indigo-950 mb-2">Cambio de Emergencia</h4><p class="text-xs text-slate-500 mb-3">Situaciones imprevistas o de fuerza mayor.</p><ul class="text-xs text-slate-600 space-y-1.5"><li class="flex items-center gap-2">&bull; Enfermedad o emergencia real</li><li class="flex items-center gap-2">&bull; Sin cargo (con justificaci&oacute;n)</li><li class="flex items-center gap-2">&bull; Prioridad de re-agendamiento</li></ul></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEJORA CONTINUA (CSI) -->
+    <section id="mejora" class="py-20 bg-[#FAF6F0] border-t border-indigo-100/50 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-bold uppercase tracking-wider itil-tag"><i class="fa-solid fa-chart-line"></i> ITIL &middot; CSI (Mejora Continua)</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-indigo-950 tracking-tight mt-3">Ay&uacute;danos a Mejorar (Feedback Loop)</h2>
+                <p class="text-slate-500 text-base mt-3 font-light">Tu opini&oacute;n es nuestro motor de mejora continua. Siguiendo el ciclo PDCA de ITIL 4.</p>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-2xl p-6 sm:p-8 border border-indigo-50 shadow-md">
+                    <h3 class="font-bold text-indigo-950 text-base mb-4 flex items-center gap-2"><i class="fa-solid fa-star text-amber-500"></i> Encuesta de Satisfacci&oacute;n Post-Servicio</h3>
+                    <div class="space-y-4 text-xs">
+                        <div><label class="block text-xs font-semibold text-slate-500 mb-2">C&oacute;mo calificar&iacute;as el servicio recibido?</label><div class="flex gap-2 text-2xl" id="star-rating"><span onclick="setRating(1)" class="cursor-pointer star hover:scale-110 transition-transform text-slate-300">☆</span><span onclick="setRating(2)" class="cursor-pointer star hover:scale-110 transition-transform text-slate-300">☆</span><span onclick="setRating(3)" class="cursor-pointer star hover:scale-110 transition-transform text-slate-300">☆</span><span onclick="setRating(4)" class="cursor-pointer star hover:scale-110 transition-transform text-slate-300">☆</span><span onclick="setRating(5)" class="cursor-pointer star hover:scale-110 transition-transform text-slate-300">☆</span></div><input type="hidden" id="feedback-rating" value="0"></div>
+                        <div><label class="block text-xs font-semibold text-slate-500 mb-1">Qu&eacute; mejorar&iacute;as?</label><textarea id="feedback-text" rows="3" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-sm focus:border-purple-500 focus:ring-0" placeholder="Cuentanos tu experiencia..."></textarea></div>
+                        <button onclick="submitFeedback()" class="w-full px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-full text-sm font-bold transition-all shadow-md"><i class="fa-solid fa-paper-plane mr-1.5"></i> Enviar Feedback</button>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-white rounded-2xl p-6 border border-indigo-50 shadow-sm"><h4 class="font-bold text-indigo-950 text-sm mb-4">Dashboard de Mejora Continua</h4><div class="space-y-3"><div><div class="flex justify-between text-xs mb-1"><span class="text-slate-500">Satisfacci&oacute;n General (CSAT)</span><span class="font-bold text-emerald-600">96%</span></div><div class="sla-meter"><div class="sla-meter-fill bg-emerald-500" style="width:96%"></div></div></div><div><div class="flex justify-between text-xs mb-1"><span class="text-slate-500">Net Promoter Score (NPS)</span><span class="font-bold text-indigo-600">72</span></div><div class="sla-meter"><div class="sla-meter-fill bg-indigo-500" style="width:72%"></div></div></div><div><div class="flex justify-between text-xs mb-1"><span class="text-slate-500">Tasa de Resoluci&oacute;n 1er Contacto (FCR)</span><span class="font-bold text-amber-600">88%</span></div><div class="sla-meter"><div class="sla-meter-fill bg-amber-500" style="width:88%"></div></div></div><div><div class="flex justify-between text-xs mb-1"><span class="text-slate-500">Tiempo Promedio de Resoluci&oacute;n (MTTR)</span><span class="font-bold text-rose-600">1.2h</span></div><div class="sla-meter"><div class="sla-meter-fill bg-rose-500" style="width:92%"></div></div></div></div></div>
+                    <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-5 border border-purple-100 text-xs flex items-start gap-3"><i class="fa-solid fa-rotate text-purple-600 mt-0.5"></i><div><h4 class="font-bold text-indigo-950 mb-1">Ciclo PDCA (Plan-Do-Check-Act)</h4><p class="text-slate-500">Cada feedback pasa por nuestro ciclo de mejora: Lo analizamos (Check), planificamos acciones (Plan), implementamos (Do) y medimos resultados (Act).</p></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-indigo-950 text-indigo-200 py-12 border-t border-indigo-900 mt-auto text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-indigo-900 pb-8">
+                <div class="flex items-center gap-3"><div class="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 shadow-md"><i class="fa-solid fa-dove text-xl"></i></div><div><span class="text-lg font-bold text-white tracking-tight block">TribuCalma</span><span class="text-[9px] block font-semibold text-emerald-400 tracking-widest uppercase -mt-1.5">ITIL 4 &middot; ITSM con Empat&iacute;a</span></div></div>
+                <div class="flex flex-wrap justify-center gap-4 text-xs font-medium"><a href="#catalogo" class="hover:text-white transition-colors">Cat&aacute;logo</a><a href="#slas" class="hover:text-white transition-colors">SLAs</a><a href="#solicitudes" class="hover:text-white transition-colors">Solicitudes</a><a href="#incidentes" class="hover:text-white transition-colors">Incidentes</a><a href="#mejora" class="hover:text-white transition-colors">Mejora</a><a href="itil4-documentacion.html" class="text-indigo-300 hover:text-white transition-colors border-l border-indigo-800 pl-4" target="_blank">ITIL 4 Guide</a></div>
+            </div>
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 text-xs text-indigo-400"><p>&copy; 2026 TribuCalma. ITSM basado en ITIL 4 &middot; Framework Axelos. Creado con empat&iacute;a.</p><span class="text-[10px] text-emerald-400">"Service Value con coraz&oacute;n humano"</span></div>
+        </div>
+    </footer>
+
+    <!-- WILSON CHAT + API KEY MODAL -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button onclick="toggleWilsonChat()" id="chat-trigger-btn" class="h-14 w-14 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center shadow-2xl hover:scale-105 transition-all relative">
+            <i class="fa-solid fa-headset text-2xl"></i>
+            <span class="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-amber-400 animate-ping"></span>
+            <span class="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-amber-500"></span>
+        </button>
+
+        <div id="wilson-chat-panel" class="hidden absolute bottom-16 right-0 w-[350px] sm:w-[380px] h-[520px] bg-white rounded-2xl border border-indigo-100 shadow-2xl flex flex-col justify-between overflow-hidden">
+            <div class="bg-indigo-900 text-white p-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="h-9 w-9 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs relative">
+                        <i class="fa-solid fa-headset text-lg"></i>
+                        <span class="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-400 border border-indigo-900"></span>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold block leading-none">Wilson &middot; Service Desk</h4>
+                        <span class="text-[10px] text-emerald-300 font-light mt-0.5 block">N1 Support &middot; SPOC</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleApiKeyModal()" class="text-[9px] bg-indigo-800 hover:bg-indigo-700 text-indigo-200 px-2 py-1 rounded-full transition-colors flex items-center gap-1" id="api-key-status-btn"><i class="fa-solid fa-key"></i> Key</button>
+                    <button onclick="toggleWilsonChat()" class="text-indigo-200 hover:text-white transition-colors"><i class="fa-solid fa-times text-lg"></i></button>
+                </div>
+            </div>
+            <div class="flex-grow p-4 overflow-y-auto space-y-3 bg-[#FAF6F0] text-xs" id="chat-messages-container">
+                <div class="flex gap-2.5 items-start max-w-[85%]">
+                    <div class="h-6 w-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 text-[10px]"><i class="fa-solid fa-headset"></i></div>
+                    <div class="bg-white border border-indigo-50 p-3 rounded-2xl rounded-tl-none shadow-sm">
+                        <p class="text-slate-600 font-light">Hola! Soy <strong>Wilson</strong>, tu Service Desk con IA. 🚀</p>
+                        <p class="text-slate-600 font-light mt-1.5">Puedo ayudarte con: Cat&aacute;logo de Servicios, SLAs, Solicitudes, Incidentes, Cambios, Mejora Continua y m&aacute;s.</p>
+                        <p class="text-slate-600 font-light mt-2">En qu&eacute; puedo servirte hoy?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-3 bg-white border-t border-indigo-100 flex flex-col gap-2">
+                <div class="flex gap-1.5 overflow-x-auto pb-1">
+                    <button onclick="quickAction('servicios')" class="text-[9px] bg-indigo-50 text-indigo-700 px-2 py-1 rounded-full whitespace-nowrap hover:bg-indigo-100 transition-colors">Servicios</button>
+                    <button onclick="quickAction('cita')" class="text-[9px] bg-emerald-50 text-emerald-700 px-2 py-1 rounded-full whitespace-nowrap hover:bg-emerald-100 transition-colors">Agendar</button>
+                    <button onclick="quickAction('incidente')" class="text-[9px] bg-rose-50 text-rose-700 px-2 py-1 rounded-full whitespace-nowrap hover:bg-rose-100 transition-colors">Incidente</button>
+                    <button onclick="quickAction('cambio')" class="text-[9px] bg-amber-50 text-amber-700 px-2 py-1 rounded-full whitespace-nowrap hover:bg-amber-100 transition-colors">Cambio</button>
+                    <button onclick="quickAction('sla')" class="text-[9px] bg-purple-50 text-purple-700 px-2 py-1 rounded-full whitespace-nowrap hover:bg-purple-100 transition-colors">SLAs</button>
+                </div>
+                <div class="flex gap-2 items-center">
+                    <input type="text" id="user-chat-input" onkeydown="handleChatEnter(event)" class="flex-grow bg-[#FAF6F0] border border-indigo-50 rounded-full px-4 py-2 text-xs focus:border-emerald-500 focus:ring-0" placeholder="Escribe a Wilson...">
+                    <button onclick="sendChatMessage()" class="h-8 w-8 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center shrink-0 transition-transform hover:scale-105"><i class="fa-solid fa-paper-plane text-xs"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- API KEY MODAL -->
+    <div id="api-key-modal" class="fixed inset-0 z-[100] bg-black/40 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border border-indigo-100">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-bold text-indigo-950 text-sm flex items-center gap-2"><i class="fa-solid fa-key text-emerald-600"></i> Configurar API Key de OpenRouter</h3>
+                <button onclick="toggleApiKeyModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <p class="text-xs text-slate-500 mb-4">Wilson usa <strong>OpenRouter</strong> para IA. Pod&eacute;s cambiar la API Key si quer&eacute;s. La key por defecto ya viene configurada.</p>
+            <input type="text" id="api-key-input" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-xs focus:border-emerald-500 focus:ring-0 mb-3" placeholder="Pega tu API Key de OpenRouter aca...">
+            <div class="flex gap-2">
+                <button onclick="saveApiKey()" class="flex-1 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full text-xs font-bold transition-all"><i class="fa-solid fa-floppy-disk mr-1"></i> Guardar Key</button>
+                <button onclick="clearApiKey()" class="px-4 py-2.5 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-full text-xs font-bold transition-all"><i class="fa-solid fa-trash-can mr-1"></i> Borrar</button>
+            </div>
+            <p id="api-key-status" class="text-[10px] text-slate-400 mt-3 text-center"></p>
+        </div>
+    </div>
+
+    <audio id="sensory-hum-player" loop></audio>
+
+    <script>
+        // ACCESSIBILITY
+        let activeContrast = false, activeTextSize = false, soundActive = false, audioCtx = null, oscNode = null, gainNode = null;
+
+        function toggleAccessibility(mode) {
+            if (mode === 'contrast') { activeContrast = !activeContrast; document.body.classList.toggle('high-contrast', activeContrast); }
+            else if (mode === 'text-size') { activeTextSize = !activeTextSize; document.body.classList.toggle('large-text', activeTextSize); }
+        }
+
+        function playSensoryHum() {
+            const btn = document.getElementById('sound-btn');
+            if (!soundActive) {
+                try {
+                    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    oscNode = audioCtx.createOscillator(); gainNode = audioCtx.createGain();
+                    oscNode.type = 'triangle'; oscNode.frequency.setValueAtTime(110, audioCtx.currentTime);
+                    gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                    oscNode.connect(gainNode); gainNode.connect(audioCtx.destination); oscNode.start();
+                    soundActive = true;
+                    btn.className = "px-2.5 py-1 rounded bg-emerald-600 hover:bg-emerald-700 transition-all font-medium flex items-center gap-1 text-white";
+                    btn.innerHTML = '<i class="fa-solid fa-volume-high"></i> Sonando Calma';
+                } catch (e) { console.error(e); }
+            } else {
+                if (oscNode) { oscNode.stop(); oscNode.disconnect(); }
+                soundActive = false;
+                btn.className = "px-2.5 py-1 rounded bg-indigo-800 hover:bg-indigo-700 transition-all font-medium flex items-center gap-1";
+                btn.innerHTML = '<i class="fa-solid fa-volume-low"></i> Ruido Blanco';
+            }
+        }
+
+        // SERVICE CATALOG
+        function toggleServiceDetail(key) {
+            const d = document.getElementById('detail-' + key), c = document.getElementById('card-' + key);
+            d.classList.toggle('hidden'); c.classList.toggle('border-emerald-500'); c.classList.toggle('shadow-md');
+        }
+
+        // INCIDENT MANAGEMENT
+        function updatePriorityVisual() {
+            const p = document.getElementById('incident-priority').value, v = document.getElementById('priority-visual'), l = document.getElementById('priority-label'), s = document.getElementById('priority-sla');
+            v.className = 'rounded-xl p-3 text-xs flex items-center gap-2';
+            if (p === 'critica') { v.className += ' priority-critical bg-red-50'; l.innerText = 'Critica'; s.innerText = '< 15 min'; }
+            else if (p === 'alta') { v.className += ' priority-high bg-orange-50'; l.innerText = 'Alta'; s.innerText = '< 30 min'; }
+            else if (p === 'media') { v.className += ' priority-medium bg-yellow-50'; l.innerText = 'Media'; s.innerText = '4 horas'; }
+            else { v.className += ' priority-low bg-green-50'; l.innerText = 'Baja'; s.innerText = '8 horas'; }
+        }
+
+        function reportIncident() {
+            const cat = document.getElementById('incident-category').value, p = document.getElementById('incident-priority').value, d = document.getElementById('incident-desc').value.trim();
+            if (!cat || !d) { alert('Completa categoria y descripcion.'); return; }
+            const names = { critica: 'Critica', alta: 'Alta', media: 'Media', baja: 'Baja' };
+            const tid = '#INC-' + Math.floor(1000+Math.random()*9000);
+            renderBubble('Incidente reportado. Ticket: ' + tid + ' - Prioridad: ' + names[p], 'wilson');
+            document.getElementById('incident-category').value = ''; document.getElementById('incident-desc').value = ''; document.getElementById('incident-ticket').value = '';
+            updatePriorityVisual(); alert('Incidente reportado. Ticket: ' + tid);
+        }
+
+        // BOOKING
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('ticket-id-preview').textContent = '#TC-' + Math.floor(1000+Math.random()*9000);
+            updateApiKeyStatus();
+        });
+
+        let bookingState = { service: 'Integracion Sensorial', details: '', date: '2026-07-21', time: '11:00 AM', prefs: [], parentName: '', childDesc: '', parentEmail: '', childNotes: '' };
+
+        function selectService(name, desc) {
+            bookingState.service = name; bookingState.details = desc;
+            document.querySelectorAll('.service-option').forEach(function(o) {
+                o.className = "service-option cursor-pointer bg-[#FAF6F0] border-2 border-transparent rounded-2xl p-5 hover:border-emerald-500/50 transition-all flex flex-col justify-between";
+                var b = o.querySelector('.badge-sel'); if(b) b.className = "badge-sel hidden";
+            });
+            var sid = 'srv-opt-sensory'; if(name === 'Lenguaje y CAA') sid = 'srv-opt-speech'; if(name === 'Acompanamiento Ocupacional') sid = 'srv-opt-occupational';
+            var ac = document.getElementById(sid);
+            ac.className = "service-option cursor-pointer bg-[#FAF6F0] border-2 border-emerald-500 rounded-2xl p-5 hover:border-emerald-500 transition-all flex flex-col justify-between";
+            var ab = ac.querySelector('.badge-sel'); if(ab) ab.className = "badge-sel block text-emerald-600 font-bold";
+        }
+
+        function goToStep(step) {
+            ['booking-step-1','booking-step-2','booking-step-3'].forEach(function(id){ document.getElementById(id).classList.add('hidden'); });
+            ['step-tab-1','step-tab-2','step-tab-3'].forEach(function(id){ document.getElementById(id).className = "border-b-2 border-transparent pb-2 text-slate-400 font-bold text-xs sm:text-sm"; });
+            if(step === 1) { document.getElementById('booking-step-1').classList.remove('hidden'); document.getElementById('step-tab-1').className = "border-b-2 border-emerald-500 pb-2 text-emerald-600 font-bold text-xs sm:text-sm"; }
+            else if(step === 2) { document.getElementById('booking-step-2').classList.remove('hidden'); document.getElementById('step-tab-2').className = "border-b-2 border-emerald-500 pb-2 text-emerald-600 font-bold text-xs sm:text-sm"; }
+            else if(step === 3) {
+                bookingState.date = document.getElementById('booking-date').value; bookingState.time = document.getElementById('booking-time').value;
+                var prefs = []; if(document.getElementById('pref-light').checked) prefs.push("Luces bajas"); if(document.getElementById('pref-sound').checked) prefs.push("Sin musica");
+                bookingState.prefs = prefs;
+                document.getElementById('sum-srv').innerText = bookingState.service; document.getElementById('sum-time').innerText = bookingState.date + ', ' + bookingState.time;
+                var cd = document.getElementById('child-desc').value.trim(); document.getElementById('sum-child').innerText = cd || "No especificado";
+                document.getElementById('sum-pref').innerText = prefs.length > 0 ? prefs.join(" y ") : "Ninguno";
+                document.getElementById('booking-step-3').classList.remove('hidden'); document.getElementById('step-tab-3').className = "border-b-2 border-emerald-500 pb-2 text-emerald-600 font-bold text-xs sm:text-sm";
+            }
+        }
+
+        function confirmBooking() {
+            var pn = document.getElementById('parent-name').value.trim(), pe = document.getElementById('parent-email').value.trim(), cd = document.getElementById('child-desc').value.trim();
+            if(!pn || !pe || !cd) { alert('Completa todos los datos.'); return; }
+            bookingState.parentName = pn; bookingState.parentEmail = pe; bookingState.childDesc = cd; bookingState.childNotes = document.getElementById('child-notes').value.trim();
+            document.getElementById('booking-step-3').classList.add('hidden'); document.getElementById('step-tab-1').parentElement.classList.add('hidden');
+            var tc = '#TC-' + Math.floor(1000+Math.random()*9000);
+            document.getElementById('succ-code').innerText = tc; document.getElementById('succ-parent').innerText = bookingState.parentName;
+            document.getElementById('succ-child').innerText = bookingState.childDesc; document.getElementById('succ-time').innerText = bookingState.date + ' a las ' + bookingState.time;
+            document.getElementById('booking-success').classList.remove('hidden');
+            renderBubble('Solicitud registrada. Ticket: ' + tc + ' - Servicio: ' + bookingState.service, 'wilson');
+        }
+
+        function resetBooking() {
+            document.getElementById('booking-success').classList.add('hidden'); document.getElementById('step-tab-1').parentElement.classList.remove('hidden');
+            document.getElementById('parent-name').value = ''; document.getElementById('parent-email').value = ''; document.getElementById('child-desc').value = '';
+            document.getElementById('child-notes').value = ''; document.getElementById('pref-light').checked = false; document.getElementById('pref-sound').checked = false;
+            goToStep(1);
+        }
+
+        // CSI FEEDBACK
+        var currentRating = 0;
+        function setRating(r) {
+            currentRating = r; document.getElementById('feedback-rating').value = r;
+            var stars = document.querySelectorAll('#star-rating .star');
+            stars.forEach(function(s, i) {
+                s.textContent = i < r ? '★' : '☆';
+                s.className = 'cursor-pointer star hover:scale-110 transition-transform ' + (i < r ? 'text-amber-500' : 'text-slate-300');
+            });
+        }
+
+        function submitFeedback() {
+            var r = document.getElementById('feedback-rating').value, t = document.getElementById('feedback-text').value.trim();
+            if(r === '0') { alert('Selecciona una calificacion.'); return; }
+            var fid = 'FB-' + Math.floor(100+Math.random()*900);
+            renderBubble('Feedback recibido (ID: ' + fid + ') - Calificacion: ' + r + '/5', 'wilson');
+            alert('Gracias por tu feedback! ID: ' + fid); document.getElementById('feedback-text').value = ''; setRating(0);
+        }
+
+        // API KEY MANAGEMENT
+        function toggleApiKeyModal() {
+            document.getElementById('api-key-modal').classList.toggle('hidden');
+            var k = localStorage.getItem('tribucalma_openrouter_key');
+            if(k) document.getElementById('api-key-input').value = k;
+            updateApiKeyStatus();
+        }
+
+        function saveApiKey() {
+            var k = document.getElementById('api-key-input').value.trim();
+            if(!k || k.length < 5) { alert('Ingresa una API Key valida.'); return; }
+            localStorage.setItem('tribucalma_openrouter_key', k);
+            document.getElementById('api-key-modal').classList.add('hidden');
+            alert('API Key guardada.'); updateApiKeyStatus();
+        }
+
+        function clearApiKey() {
+            if(!confirm('Borrar API Key?')) return;
+            localStorage.removeItem('tribucalma_openrouter_key');
+            document.getElementById('api-key-input').value = '';
+            document.getElementById('api-key-modal').classList.add('hidden');
+            updateApiKeyStatus(); alert('API Key borrada.');
+        }
+
+        function getSavedKey() { return localStorage.getItem('tribucalma_openrouter_key') || ''; }
+
+        function updateApiKeyStatus() {
+            var k = getSavedKey(), s = document.getElementById('api-key-status'), b = document.getElementById('api-key-status-btn');
+            if(!s || !b) return;
+            if(k && k.length > 5) {
+                var masked = k.substring(0,6) + '...' + k.substring(k.length-4);
+                s.innerHTML = 'Key configurada: <code class="font-mono bg-indigo-50 px-1 rounded">' + masked + '</code>';
+                b.innerHTML = '<i class="fa-solid fa-key text-emerald-300"></i> ' + masked;
+                b.className = 'text-[9px] bg-emerald-800 hover:bg-emerald-700 text-emerald-200 px-2 py-1 rounded-full transition-colors flex items-center gap-1';
+            } else {
+                s.innerHTML = 'Default activa. <a href="#" onclick="toggleApiKeyModal();return false;" class="text-emerald-600 hover:underline font-bold">Cambiar key</a>';
+                b.innerHTML = '<i class="fa-solid fa-key"></i> Key';
+                b.className = 'text-[9px] bg-indigo-800 hover:bg-indigo-700 text-indigo-200 px-2 py-1 rounded-full transition-colors flex items-center gap-1';
+            }
+        }
+
+        // WILSON CHAT - OpenRouter
+        // Obtén tu API Key gratuita en https://openrouter.ai/keys
+        const DEFAULT_OPENROUTER_KEY = ''; // ← Reemplázala o configúrala en la UI
+        function getActiveKey() { return getSavedKey() || DEFAULT_OPENROUTER_KEY; }
+
+        function toggleWilsonChat() {
+            document.getElementById('wilson-chat-panel').classList.toggle('hidden');
+            updateApiKeyStatus();
+        }
+
+        function handleChatEnter(e) { if(e.key === 'Enter') sendChatMessage(); }
+
+        function quickAction(type) {
+            var msgs = {
+                servicios: "Quiero conocer los servicios disponibles con sus SLAs",
+                cita: "Quiero agendar una cita (solicitud de servicio)",
+                incidente: "Quiero reportar un incidente",
+                cambio: "Necesito reprogramar mi cita (cambio)",
+                sla: "Muestrame los SLAs vigentes"
+            };
+            document.getElementById('user-chat-input').value = msgs[type] || '';
+            sendChatMessage();
+        }
+
+        async function sendChatMessage() {
+            var el = document.getElementById('user-chat-input'), txt = el.value.trim();
+            if(!txt) return;
+            el.value = ''; renderBubble(txt, 'user');
+            var pid = renderTypingPlaceholder();
+            try {
+                var resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + getActiveKey(),
+                        'Content-Type': 'application/json',
+                        'HTTP-Referer': 'https://tribucalma.app',
+                        'X-Title': 'TribuCalma - Wilson'
+                    },
+                    body: JSON.stringify({
+                        model: 'openai/gpt-4o-mini',
+                        messages: [
+                            { role: 'system', content: 'Eres WILSON, Service Desk Agent de TribuCalma. TribuCalma es un centro de terapia para ninos neurodivergentes que aplica ITIL 4 para ITSM. Servicios: 1) Integracion Sensorial ($45, SLA 98%), 2) Lenguaje y CAA ($50, SLA 97%), 3) Terapia Ocupacional ($48, SLA 96%), 4) Apoyo Socio-Emocional ($55, SLA 99%). SLAs: Consultas <2h, Incidentes criticos 15min, Solicitudes <1h, Recordatorio 24h, Historia social 48h. Cambios: Estandar (>48h sin costo), Normal (<48h 15%), Emergencia (sin cargo). Incidentes: Critica <15min, Alta <30min, Media <2h, Baja <8h. CSI: CSAT 96%, NPS 72, FCR 88%, MTTR 1.2h. Se EMPATICO y CALIDO. Responde SIEMPRE en espanol.' },
+                            { role: 'user', content: txt }
+                        ]
+                    })
+                });
+                if(!resp.ok) throw new Error('API Error ' + resp.status);
+                var data = await resp.json(), aiText = data.choices?.[0]?.message?.content;
+                removePlaceholder(pid);
+                if(aiText && aiText.trim()) { renderBubble(aiText.trim(), 'wilson'); return; }
+                throw new Error('Vacio');
+            } catch(e) {
+                console.error(e); removePlaceholder(pid);
+                renderBubble('Disculpa, problema de conexion. Preguntame sobre servicios, SLAs, agenda, incidentes o cambios.', 'wilson');
+            }
+        }
+
+        function renderBubble(text, sender) {
+            var c = document.getElementById('chat-messages-container'), w = document.createElement('div');
+            if(sender === 'user') {
+                w.className = 'flex justify-end gap-2.5 max-w-[85%] ml-auto';
+                w.innerHTML = '<div class="bg-indigo-900 text-white p-3 rounded-2xl rounded-tr-none shadow-sm font-light"><p>' + text + '</p></div>';
+            } else {
+                w.className = 'flex gap-2.5 items-start max-w-[85%]';
+                w.innerHTML = '<div class="h-6 w-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 text-[10px]"><i class="fa-solid fa-headset"></i></div><div class="bg-white border border-indigo-50 p-3 rounded-2xl rounded-tl-none shadow-sm"><p class="text-slate-600 font-light">' + text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>') + '</p></div>';
+            }
+            c.appendChild(w); c.scrollTop = c.scrollHeight;
+        }
+
+        function renderTypingPlaceholder() {
+            var c = document.getElementById('chat-messages-container'), id = 't-' + Date.now(), w = document.createElement('div');
+            w.id = id; w.className = 'flex gap-2.5 items-start max-w-[85%]';
+            w.innerHTML = '<div class="h-6 w-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 text-[10px]"><i class="fa-solid fa-headset"></i></div><div class="bg-white border border-indigo-50 p-3 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-slate-400 animate-bounce"></span><span class="h-2 w-2 rounded-full bg-slate-400 animate-bounce" style="animation-delay:0.2s"></span><span class="h-2 w-2 rounded-full bg-slate-400 animate-bounce" style="animation-delay:0.4s"></span></div>';
+            c.appendChild(w); c.scrollTop = c.scrollHeight; return id;
+        }
+
+        function removePlaceholder(id) { var e = document.getElementById(id); if(e) e.remove(); }
+    </script>
+</body>
+</html>

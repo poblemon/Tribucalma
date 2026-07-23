@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TribuCalma - Espacio Seguro y Citas para Niños Neurodivergentes</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Lexend (Designed for reading/cognitive accessibility) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom styling for accessibility modes and transitions -->
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #FAF6F0; /* Soft warm cream */
+            color: #2D3748; /* Off-black for soft contrast */
+            transition: all 0.3s ease;
+        }
+
+        /* Custom Pastel Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF6F0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94A3B8;
+        }
+
+        /* Accessibility Classes */
+        .high-contrast {
+            background-color: #111827 !important;
+            color: #F9FAFB !important;
+        }
+        .high-contrast .bg-card,
+        .high-contrast .bg-white,
+        .high-contrast .bg-slate-50,
+        .high-contrast .bg-indigo-50 {
+            background-color: #1F2937 !important;
+            border-color: #D1D5DB !important;
+            color: #F9FAFB !important;
+        }
+        .high-contrast p, .high-contrast span, .high-contrast label, .high-contrast h1, .high-contrast h2, .high-contrast h3, .high-contrast h4 {
+            color: #FFFFFF !important;
+        }
+        .high-contrast button, .high-contrast select, .high-contrast input, .high-contrast textarea {
+            background-color: #374151 !important;
+            color: #FFFFFF !important;
+            border: 2px solid #FFFFFF !important;
+        }
+        .high-contrast a {
+            color: #38BDF8 !important;
+        }
+
+        .large-text p, .large-text li, .large-text span {
+            font-size: 1.15rem !important;
+            line-height: 1.8 !important;
+        }
+        .large-text h2 {
+            font-size: 2.25rem !important;
+        }
+        .large-text h3 {
+            font-size: 1.75rem !important;
+        }
+
+        /* Calm pulse effect */
+        @keyframes gentlePulse {
+            0%, 100% { transform: scale(1); opacity: 0.95; }
+            50% { transform: scale(1.02); opacity: 1; }
+        }
+        .pulse-gentle {
+            animation: gentlePulse 4s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="selection:bg-indigo-200 selection:text-indigo-900 overflow-x-hidden">
+
+    
+    <!-- ACCESSIBILITY BAR (Top Sticky Alert & Configuration) -->
+    <div class="bg-indigo-900 text-white py-2 px-4 shadow-sm relative z-50">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+            <span class="flex items-center gap-2 text-center sm:text-left">
+                <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <strong>Espacio Seguro TribuCalma:</strong> Diseñado respetando el procesamiento sensorial y cognitivo.
+            </span>
+            <div class="flex items-center gap-4">
+                <span class="text-indigo-200 hidden md:inline">Opciones de accesibilidad:</span>
+                <div class="flex gap-2">
+                    <button onclick="toggleAccessibility('contrast')" class="px-2.5 py-1 rounded bg-indigo-800 hover:bg-indigo-700 transition-all font-medium flex items-center gap-1" title="Alternar Alto Contraste">
+                        <i class="fa-solid fa-circle-half-stroke"></i> Contraste
+                    </button>
+                    <button onclick="toggleAccessibility('text-size')" class="px-2.5 py-1 rounded bg-indigo-800 hover:bg-indigo-700 transition-all font-medium flex items-center gap-1" title="Agrandar Letra">
+                        <i class="fa-solid fa-text-height"></i> Letra Grande
+                    </button>
+                    <button onclick="playSensoryHum()" id="sound-btn" class="px-2.5 py-1 rounded bg-indigo-800 hover:bg-indigo-700 transition-all font-medium flex items-center gap-1" title="Reproducir Sonido Calma">
+                        <i class="fa-solid fa-volume-low"></i> Ruido Blanco
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAVIGATION -->
+    <header class="bg-[#FAF6F0] border-b border-indigo-100/50 sticky top-0 z-40 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="h-12 w-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 transition-transform group-hover:scale-105">
+                        <i class="fa-solid fa-dove text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-bold text-indigo-900 tracking-tight block">TribuCalma</span>
+                        <span class="text-[11px] block font-semibold text-emerald-600 tracking-wider uppercase -mt-1.5">Neurodiversidad con Amor</span>
+                    </div>
+                </a>
+
+                <!-- Nav Links -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="#tratamientos" class="text-sm font-semibold text-indigo-900 hover:text-emerald-600 transition-colors">Terapias</a>
+                    <a href="#horarios" class="text-sm font-semibold text-indigo-900 hover:text-emerald-600 transition-colors">Horarios</a>
+                    <a href="#padres" class="text-sm font-semibold text-indigo-900 hover:text-emerald-600 transition-colors">Para Padres</a>
+                    <a href="#reservas" class="text-sm font-semibold text-indigo-900 hover:text-emerald-600 transition-colors">Agendar Cita</a>
+                </nav>
+
+                <!-- Booking CTA -->
+                <a href="#reservas" class="inline-flex items-center justify-center px-5 py-2.5 rounded-full text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 transition-all shadow-md shadow-emerald-600/10 hover:shadow-lg hover:shadow-emerald-600/20">
+                    <i class="fa-regular fa-calendar-check mr-2"></i> Reservar Ahora
+                </a>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- HERO SECTION (Welcoming, Calming, Sensory-friendly) -->
+    <section class="relative overflow-hidden py-16 sm:py-24 bg-gradient-to-b from-indigo-50/40 via-[#FAF6F0] to-[#FAF6F0]">
+        <!-- Soft background circles -->
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-emerald-100/40 rounded-full blur-3xl"></div>
+        <div class="absolute top-40 right-10 w-80 h-80 bg-lavender-100/40 bg-purple-100/30 rounded-full blur-3xl"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                <!-- Text intro -->
+                <div class="lg:col-span-7 space-y-6 text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100/80 border border-emerald-200 text-xs font-semibold text-emerald-800">
+                        <i class="fa-solid fa-heart-pulse"></i> Un espacio diseñado para mentes extraordinarias
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-indigo-950">
+                        Tu hijo merece un espacio que <span class="text-emerald-600">entienda su ritmo</span>.
+                    </h1>
+                    <p class="text-lg text-slate-600 leading-relaxed max-w-2xl font-light">
+                        En <strong>TribuCalma</strong> acompañamos a niños con Autismo, TDAH, Seps y otras condiciones de neurodiversidad. Eliminamos la fricción y el estrés de las citas médicas tradicionales con terapeutas especializados en entornos amigables de baja estimulación.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <a href="#reservas" class="px-6 py-3.5 rounded-full font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition-all text-sm shadow-md hover:shadow-lg">
+                            <i class="fa-regular fa-calendar mr-1.5"></i> Agendar primera sesión
+                        </a>
+                        <a href="#tratamientos" class="px-6 py-3.5 rounded-full font-bold bg-white hover:bg-indigo-50 border border-indigo-100 text-indigo-900 transition-all text-sm">
+                            Explorar tratamientos
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Visual Focus Box / interactive status -->
+                <div class="lg:col-span-5">
+                    <div class="bg-white border border-indigo-50 rounded-3xl p-6 sm:p-8 shadow-xl shadow-indigo-100/30 relative pulse-gentle">
+                        <div class="absolute -top-3 -right-3 h-10 w-10 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center shadow-md">
+                            <i class="fa-solid fa-sun text-lg"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-indigo-950 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-check text-emerald-500"></i> ¿Por qué somos diferentes?
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex gap-3 items-start">
+                                <span class="h-6 w-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs mt-1 shrink-0"><i class="fa-solid fa-check"></i></span>
+                                <div>
+                                    <h4 class="text-sm font-bold text-indigo-950">Salas de baja estimulación</h4>
+                                    <p class="text-xs text-slate-500">Luces cálidas regulables, sin ruidos mecánicos ni sobrecarga de decorados.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 items-start">
+                                <span class="h-6 w-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs mt-1 shrink-0"><i class="fa-solid fa-check"></i></span>
+                                <div>
+                                    <h4 class="text-sm font-bold text-indigo-950">Anticipación visual interactiva</h4>
+                                    <p class="text-xs text-slate-500">Enviamos historias sociales en fotos y videos para que tu hijo conozca el consultorio y a su terapeuta antes de ir.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 items-start">
+                                <span class="h-6 w-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs mt-1 shrink-0"><i class="fa-solid fa-check"></i></span>
+                                <div>
+                                    <h4 class="text-sm font-bold text-indigo-950">Flexibilidad total</h4>
+                                    <p class="text-xs text-slate-500">Si un niño necesita detener la sesión, caminar, usar juguetes sensoriales o tomar aire, el terapeuta lo acompaña de manera natural.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- TREATMENT & THERAPIES SECTION -->
+    <section id="tratamientos" class="py-20 bg-white transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider">Terapias de Acompañamiento</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-indigo-950 tracking-tight mt-3">
+                    Nuestras Áreas de Apoyo Especializado
+                </h2>
+                <p class="text-slate-500 text-base mt-3 font-light">
+                    Intervenciones terapéuticas respetuosas guiadas por el juego y enfocadas en potenciar la autonomía del niño. Haz clic en las tarjetas para expandir la información.
+                </p>
+            </div>
+
+            <!-- Interative Treatment Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Therapy 1 -->
+                <div onclick="toggleTreatmentDetail('sensory')" class="cursor-pointer group bg-[#FAF6F0] border border-indigo-50 rounded-2xl p-6 hover:border-emerald-500/50 hover:shadow-lg transition-all" id="card-sensory">
+                    <div class="h-12 w-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-hand-sparkles"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-indigo-950 mb-2">Integración Sensorial</h3>
+                    <p class="text-xs text-slate-500 line-clamp-3">Ayuda a procesar estímulos visuales, táctiles, auditivos y de movimiento de forma equilibrada para regular la sobrecarga de información.</p>
+                    <div class="mt-4 flex items-center gap-1.5 text-xs text-emerald-600 font-bold group-hover:translate-x-1 transition-transform">
+                        <span>Ver más información</span> <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </div>
+                    <!-- Hidden details shown interactively -->
+                    <div id="detail-sensory" class="hidden mt-4 pt-4 border-t border-indigo-100/50 text-xs text-slate-600 space-y-2">
+                        <p><strong>Ideal para:</strong> Niños que se abruman con ruidos fuertes, rechazan texturas alimentarias o buscan movimiento constante.</p>
+                        <p><strong>Dinámica:</strong> Juegos con hamacas, columpios suspendidos, texturas suaves y control de peso propio en nuestra sala sensorial.</p>
+                    </div>
+                </div>
+
+                <!-- Therapy 2 -->
+                <div onclick="toggleTreatmentDetail('speech')" class="cursor-pointer group bg-[#FAF6F0] border border-indigo-50 rounded-2xl p-6 hover:border-emerald-500/50 hover:shadow-lg transition-all" id="card-speech">
+                    <div class="h-12 w-12 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-indigo-950 mb-2">Lenguaje y CAA</h3>
+                    <p class="text-xs text-slate-500 line-clamp-3">Apoyo en comunicación verbal o mediante Comunicación Aumentativa y Alternativa (pictogramas, tablets con voz asistida).</p>
+                    <div class="mt-4 flex items-center gap-1.5 text-xs text-indigo-600 font-bold group-hover:translate-x-1 transition-transform">
+                        <span>Ver más información</span> <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </div>
+                    <!-- Hidden details shown interactively -->
+                    <div id="detail-speech" class="hidden mt-4 pt-4 border-t border-indigo-100/50 text-xs text-slate-600 space-y-2">
+                        <p><strong>Ideal para:</strong> Niños no verbales, con habla tardía, ecolalia o dificultades de estructuración social.</p>
+                        <p><strong>Dinámica:</strong> Fomento de la intención comunicativa interactuando con tarjetas visuales, juegos interactivos y soporte tecnológico.</p>
+                    </div>
+                </div>
+
+                <!-- Therapy 3 -->
+                <div onclick="toggleTreatmentDetail('occupational')" class="cursor-pointer group bg-[#FAF6F0] border border-indigo-50 rounded-2xl p-6 hover:border-emerald-500/50 hover:shadow-lg transition-all" id="card-occupational">
+                    <div class="h-12 w-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-puzzle-piece"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-indigo-950 mb-2">Terapia Ocupacional</h3>
+                    <p class="text-xs text-slate-500 line-clamp-3">Potenciamos la motricidad fina, el agarre, la alimentación autónoma y habilidades de la vida diaria en el hogar.</p>
+                    <div class="mt-4 flex items-center gap-1.5 text-xs text-amber-700 font-bold group-hover:translate-x-1 transition-transform">
+                        <span>Ver más información</span> <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </div>
+                    <!-- Hidden details shown interactively -->
+                    <div id="detail-occupational" class="hidden mt-4 pt-4 border-t border-indigo-100/50 text-xs text-slate-600 space-y-2">
+                        <p><strong>Ideal para:</strong> Dificultades al abotonarse, amarrarse zapatos, usar cubiertos o escribir en el colegio.</p>
+                        <p><strong>Dinámica:</strong> Circuitos motrices con masa moldeable, pinzas gigantes, rompecabezas cooperativos y rutinas adaptadas.</p>
+                    </div>
+                </div>
+
+                <!-- Therapy 4 -->
+                <div onclick="toggleTreatmentDetail('behavioral')" class="cursor-pointer group bg-[#FAF6F0] border border-indigo-50 rounded-2xl p-6 hover:border-emerald-500/50 hover:shadow-lg transition-all" id="card-behavioral">
+                    <div class="h-12 w-12 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-shield-heart"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-indigo-950 mb-2">Apoyo Socio-Emocional</h3>
+                    <p class="text-xs text-slate-500 line-clamp-3">Acompañamiento terapéutico respetuoso para manejar desregulaciones, entender emociones complejas y relacionarse con otros niños.</p>
+                    <div class="mt-4 flex items-center gap-1.5 text-xs text-rose-600 font-bold group-hover:translate-x-1 transition-transform">
+                        <span>Ver más información</span> <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </div>
+                    <!-- Hidden details shown interactively -->
+                    <div id="detail-behavioral" class="hidden mt-4 pt-4 border-t border-indigo-100/50 text-xs text-slate-600 space-y-2">
+                        <p><strong>Ideal para:</strong> Niños con desregulaciones emocionales frecuentes (crisis por cambios de rutina), timidez o TDAH hiperactivo.</p>
+                        <p><strong>Dinámica:</strong> Herramientas corporales de calma, juego libre regulado y creación conjunta de pautas de autorregulación.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- HORARIOS SECTION -->
+    <section id="horarios" class="py-20 bg-[#FAF6F0] border-t border-indigo-100/50 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white border border-indigo-50 rounded-3xl p-8 sm:p-12 shadow-xl">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <span class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-bold uppercase tracking-wider">Nuestra Disponibilidad</span>
+                        <h2 class="text-3xl font-extrabold text-indigo-950 tracking-tight mt-3">
+                            Días y Horarios Diseñados para tu Comodidad
+                        </h2>
+                        <p class="text-slate-500 text-sm mt-3 leading-relaxed font-light">
+                            Entendemos que los horarios escolares y el agotamiento de la tarde son factores clave. Ofrecemos ventanas de atención estructuradas y franjas exclusivas de baja estimulación para niños altamente sensibles.
+                        </p>
+                        
+                        <div class="mt-6 space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-[#FAF6F0] rounded-xl border border-indigo-50 text-xs">
+                                <span class="font-bold text-indigo-950">Lunes a Viernes</span>
+                                <span class="text-slate-600 font-medium">08:00 AM - 07:00 PM</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-[#FAF6F0] rounded-xl border border-indigo-50 text-xs">
+                                <span class="font-bold text-indigo-950">Sábados</span>
+                                <span class="text-slate-600 font-medium">09:00 AM - 02:00 PM</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-emerald-50 rounded-xl border border-emerald-100 text-xs">
+                                <span class="font-bold text-emerald-800 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-feather"></i> Horario de Calma Sensorial
+                                </span>
+                                <span class="text-emerald-700 font-bold">Mar. y Jue. • 10:00 AM - 12:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual interactive clock map -->
+                    <div class="bg-[#FAF6F0] rounded-2xl p-6 border border-indigo-50 space-y-4 text-center">
+                        <div class="h-16 w-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl mx-auto">
+                            <i class="fa-solid fa-hourglass-half"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-indigo-950 text-sm">Garantía de Tiempo y Espacio</h3>
+                            <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">Nuestras citas duran 45 minutos y dejamos 15 minutos libres entre niños para ventilar, ordenar materiales sensoriales y evitar el cruce estresante en sala de espera.</p>
+                        </div>
+                        <div class="pt-2">
+                            <a href="#reservas" class="inline-block px-5 py-2.5 bg-indigo-900 hover:bg-indigo-800 text-white rounded-full text-xs font-bold transition-all">
+                                Consultar citas libres
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- RESOURCES FOR PARENTS SECTION -->
+    <section id="padres" class="py-20 bg-white transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold uppercase tracking-wider">Caja de Herramientas para Padres</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-indigo-950 tracking-tight mt-3">
+                    Recursos y Consejos de Crianza Respetuosa
+                </h2>
+                <p class="text-slate-500 text-base mt-3 font-light">
+                    Porque sabemos que criar a un niño neurodivergente requiere red de apoyo y herramientas. Filtra nuestros consejos prácticos rápidos:
+                </p>
+            </div>
+
+            <!-- Tabs selector -->
+            <div class="flex justify-center gap-3 mb-10 overflow-x-auto pb-2">
+                <button onclick="filterTips('autismo')" id="tab-autismo" class="tips-tab px-5 py-2 rounded-full font-bold text-xs bg-emerald-100 text-emerald-800 transition-all">
+                    Autismo (TEA)
+                </button>
+                <button onclick="filterTips('tdah')" id="tab-tdah" class="tips-tab px-5 py-2 rounded-full font-bold text-xs bg-[#FAF6F0] text-slate-600 hover:bg-indigo-50 transition-all">
+                    TDAH
+                </button>
+                <button onclick="filterTips('sensorial')" id="tab-sensorial" class="tips-tab px-5 py-2 rounded-full font-bold text-xs bg-[#FAF6F0] text-slate-600 hover:bg-indigo-50 transition-all">
+                    Procesamiento Sensorial
+                </button>
+            </div>
+
+            <!-- Tips dynamic rendering -->
+            <div id="tips-container" class="grid md:grid-cols-3 gap-6">
+                <!-- Autismo Tip 1 -->
+                <div class="tip-card autismo bg-[#FAF6F0] border border-indigo-50 rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="text-[10px] text-emerald-600 font-bold uppercase tracking-wider mb-2">Historias Sociales</div>
+                        <h4 class="font-bold text-indigo-950 text-sm mb-2">Anticipar eventos con imágenes</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Antes de ir a un lugar nuevo, muéstrale fotos secuenciales del paso a paso: 'Primero subimos al auto, luego entramos, jugamos y volvemos'. Esto reduce un 80% la ansiedad de transición.</p>
+                    </div>
+                </div>
+
+                <!-- Autismo Tip 2 -->
+                <div class="tip-card autismo bg-[#FAF6F0] border border-indigo-50 rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="text-[10px] text-emerald-600 font-bold uppercase tracking-wider mb-2">Soporte Visual</div>
+                        <h4 class="font-bold text-indigo-950 text-sm mb-2">Rutinas en pictograma para el baño</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Organiza un tablero visual vertical con la secuencia de cepillado de dientes o lavado de manos. Le permite autorregularse sin depender de instrucciones orales repetitivas.</p>
+                    </div>
+                </div>
+
+                <!-- Autismo Tip 3 -->
+                <div class="tip-card autismo bg-[#FAF6F0] border border-indigo-50 rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="text-[10px] text-emerald-600 font-bold uppercase tracking-wider mb-2">Tiempo de Procesamiento</div>
+                        <h4 class="font-bold text-indigo-950 text-sm mb-2">La regla de los 10 segundos</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Cuando le des una instrucción simple, espera silenciosamente diez segundos antes de repetirla. Sus neuronas están procesando el lenguaje y apurarlo interrumpe ese flujo.</p>
+                    </div>
+                </div>
+
+                <!-- TDAH Tip 1 (Hidden at start) -->
+                <div class="tip-card tdah hidden bg-[#FAF6F0] border border-indigo-50 rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="text-[10px] text-indigo-600 font-bold uppercase tracking-wider mb-2">Canalización motriz</div>
+                        <h4 class="font-bold text-indigo-950 text-sm mb-2">Permite el movimiento pasivo</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Sentarse en una pelota de yoga o usar una banda elástica en las patas de la silla escolar ayuda a que el cuerpo se mueva, permitiendo al cerebro concentrarse mejor en la tarea de mesa.</p>
+                    </div>
+                </div>
+
+                <!-- TDAH Tip 2 (Hidden at start) -->
+                <div class="tip-card tdah hidden bg-[#FAF6F0] border border-indigo-50 rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="text-[10px] text-indigo-600 font-bold uppercase tracking-wider mb-2">Gestión del Tiempo</div>
+                        <h4 class="font-bold text-indigo-950 text-sm mb-2">Usa cronómetros visuales (Time-Timer)</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">La noción del tiempo suele ser abstracta para el cerebro TDAH. Un reloj donde el disco de color desaparece a medida que avanza ayuda a entender cuánto dura una actividad.</p>
+                    </div>
+                </div>
+
+                <!-- Sensorial Tip 1 (Hidden at start) -->
+                <div class="tip-card sensorial hidden bg-[#FAF6F0] border border-indigo-50 rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="text-[10px] text-amber-700 font-bold uppercase tracking-wider mb-2">Desregulación táctil</div>
+                        <h4 class="font-bold text-indigo-950 text-sm mb-2">Evita prendas con costuras duras</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Corta las etiquetas de la ropa interior y compra calcetines sin costuras en los dedos. La irritación táctil constante agota la energía del niño y puede provocar crisis inexplicables.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- EASY BOOKING ENGINE (Low friction, highly supportive wizard) -->
+    <section id="reservas" class="py-20 bg-[#FAF6F0] border-t border-indigo-100/50 transition-colors duration-300">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase"><i class="fa-solid fa-calendar-check mr-1.5"></i> Citas sin Estrés</span>
+                <h2 class="text-3xl font-extrabold text-indigo-950 tracking-tight mt-2">Agendar una Sesión en TribuCalma</h2>
+                <p class="text-slate-500 text-sm mt-2">
+                    Pensado para evitar bucles de correo o llamadas. Elige con confianza y nos encargaremos del resto.
+                </p>
+            </div>
+
+            <!-- Booking App Card -->
+            <div class="bg-white border border-indigo-50 rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden">
+                
+                <!-- Steps Progress Visualizer -->
+                <div class="grid grid-cols-3 gap-2 mb-8 border-b border-indigo-50/50 pb-6 text-center">
+                    <div id="step-tab-1" class="border-b-2 border-emerald-500 pb-2 text-emerald-600 font-bold text-xs sm:text-sm">
+                        1. Elegir Apoyo
+                    </div>
+                    <div id="step-tab-2" class="border-b-2 border-transparent pb-2 text-slate-400 font-bold text-xs sm:text-sm">
+                        2. Horario y Espacio
+                    </div>
+                    <div id="step-tab-3" class="border-b-2 border-transparent pb-2 text-slate-400 font-bold text-xs sm:text-sm">
+                        3. Contacto y Cierre
+                    </div>
+                </div>
+
+                <!-- Step 1: Select Therapy/Service -->
+                <div id="booking-step-1" class="space-y-4">
+                    <h3 class="text-base font-bold text-indigo-950 mb-2">Selecciona el tipo de terapia que requiere tu hijo:</h3>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <!-- Card 1 -->
+                        <div onclick="selectService('Integración Sensorial', 'Sesión de juego sensorial y regulación')" class="service-option cursor-pointer bg-[#FAF6F0] border-2 border-emerald-500 rounded-2xl p-5 hover:border-emerald-500 transition-all flex flex-col justify-between" id="srv-opt-sensory">
+                            <div>
+                                <span class="h-8 w-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center text-sm mb-3"><i class="fa-solid fa-hand-sparkles"></i></span>
+                                <h4 class="font-bold text-indigo-950 text-sm">Integración Sensorial</h4>
+                                <p class="text-slate-500 text-xs mt-1">Sala equipada para regulación táctil, vestibular y propioceptiva.</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-indigo-100/40 text-[11px] text-emerald-600 font-bold flex justify-between items-center">
+                                <span>Duración: 45 min</span>
+                                <span class="badge-sel">Seleccionado</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div onclick="selectService('Lenguaje y CAA', 'Soporte y fomento de intención comunicativa')" class="service-option cursor-pointer bg-[#FAF6F0] border-2 border-transparent rounded-2xl p-5 hover:border-emerald-500/50 transition-all flex flex-col justify-between" id="srv-opt-speech">
+                            <div>
+                                <span class="h-8 w-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm mb-3"><i class="fa-solid fa-comments"></i></span>
+                                <h4 class="font-bold text-indigo-950 text-sm">Lenguaje y CAA</h4>
+                                <p class="text-slate-500 text-xs mt-1">Estimulación del habla y sistemas alternativos de pictogramas.</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-indigo-100/40 text-[11px] text-slate-400 flex justify-between items-center">
+                                <span>Duración: 45 min</span>
+                                <span class="badge-sel hidden">Elegir</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div onclick="selectService('Acompañamiento Ocupacional', 'Habilidades de autonomía diaria')" class="service-option cursor-pointer bg-[#FAF6F0] border-2 border-transparent rounded-2xl p-5 hover:border-emerald-500/50 transition-all flex flex-col justify-between" id="srv-opt-occupational">
+                            <div>
+                                <span class="h-8 w-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-sm mb-3"><i class="fa-solid fa-puzzle-piece"></i></span>
+                                <h4 class="font-bold text-indigo-950 text-sm">Terapia Ocupacional</h4>
+                                <p class="text-slate-500 text-xs mt-1">Motricidad fina, alimentación respetuosa y autonomía cotidiana.</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-indigo-100/40 text-[11px] text-slate-400 flex justify-between items-center">
+                                <span>Duración: 45 min</span>
+                                <span class="badge-sel hidden">Elegir</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sensory profile checklist -->
+                    <div class="p-4 bg-indigo-50/50 rounded-2xl border border-indigo-100/50 mt-4">
+                        <p class="text-xs font-bold text-indigo-950 mb-2 flex items-center gap-1.5">
+                            <i class="fa-solid fa-info-circle text-indigo-600"></i> Ajustes de comodidad sensorial para la cita:
+                        </p>
+                        <div class="grid sm:grid-cols-2 gap-2 text-xs">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" id="pref-light" class="rounded text-emerald-600 focus:ring-0">
+                                <span>Regular luces bajas/cálidas</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" id="pref-sound" class="rounded text-emerald-600 focus:ring-0">
+                                <span>Sin música de fondo en sala</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end pt-4">
+                        <button onclick="goToStep(2)" class="px-6 py-2.5 rounded-full text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 transition-all flex items-center gap-2">
+                            Continuar <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Date, Time & Mode picker -->
+                <div id="booking-step-2" class="space-y-4 hidden">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Date selecting -->
+                        <div>
+                            <label class="block text-xs font-bold text-indigo-950 uppercase tracking-wider mb-2">Selecciona Fecha de Cita</label>
+                            <input type="date" id="booking-date" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-sm focus:border-emerald-500 focus:ring-0" value="2026-07-21" min="2026-07-20">
+                            <p class="text-[11px] text-slate-400 italic mt-1">Atención disponible de lunes a sábado.</p>
+                        </div>
+
+                        <!-- Hour options -->
+                        <div>
+                            <label class="block text-xs font-bold text-indigo-950 uppercase tracking-wider mb-2">Horario Conveniente</label>
+                            <select id="booking-time" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-sm focus:border-emerald-500 focus:ring-0">
+                                <option value="09:00 AM">09:00 AM (Franja matutina despejada)</option>
+                                <option value="11:00 AM">11:00 AM (Sensorial amigable)</option>
+                                <option value="03:30 PM">03:30 PM (Tarde de juego)</option>
+                                <option value="05:00 PM">05:00 PM (Último turno escolar)</option>
+                            </select>
+                            <div class="mt-4 p-3 bg-emerald-50/50 border border-emerald-100 rounded-xl text-[11px] text-emerald-800 flex items-start gap-2">
+                                <i class="fa-solid fa-circle-question mt-0.5"></i>
+                                <span>Si necesitas un horario por fuera del calendario común, escribe a <strong>Wilson</strong> en el chatbox inferior.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between pt-4 border-t border-indigo-50/50">
+                        <button onclick="goToStep(1)" class="px-5 py-2 rounded-full text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all">
+                            Atrás
+                        </button>
+                        <button onclick="goToStep(3)" class="px-6 py-2.5 rounded-full text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 transition-all">
+                            Siguiente paso <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Contact details -->
+                <div id="booking-step-3" class="space-y-4 hidden">
+                    <h3 class="text-base font-bold text-indigo-950">Datos del Padre/Madre y del Pequeño:</h3>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 mb-1">Tu Nombre Completo</label>
+                            <input type="text" id="parent-name" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-xs focus:border-emerald-500 focus:ring-0" placeholder="Ej. Mariana González">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 mb-1">Nombre y edad de tu hijo</label>
+                            <input type="text" id="child-desc" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-xs focus:border-emerald-500 focus:ring-0" placeholder="Ej. Mateo, 6 años">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 mb-1">Tu Correo Electrónico</label>
+                            <input type="email" id="parent-email" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-xs focus:border-emerald-500 focus:ring-0" placeholder="mariana@gmail.com">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 mb-1">Cuéntanos un poco sobre él/ella (gustos, temores, detonantes)</label>
+                            <textarea id="child-notes" rows="2" class="w-full bg-[#FAF6F0] border border-indigo-100 rounded-xl p-3 text-xs focus:border-emerald-500 focus:ring-0" placeholder="Ej. Le molestan los ruidos metálicos y ama los dinosaurios de plástico."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- SLA Box summary -->
+                    <div class="bg-[#FAF6F0] p-4 rounded-2xl border border-indigo-100/50 mt-4 text-xs">
+                        <h4 class="font-bold text-indigo-950 mb-2">Resumen de tu Turno Protegido:</h4>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                            <div>
+                                <span class="text-slate-400 block">Apoyo:</span>
+                                <span class="font-bold text-indigo-950" id="sum-srv">Integración Sensorial</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 block">Horario:</span>
+                                <span class="font-bold text-indigo-950" id="sum-time">2026-07-21, 11:00 AM</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 block">Niño:</span>
+                                <span class="font-bold text-indigo-950" id="sum-child">Mateo, 6 años</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 block">Ajustes:</span>
+                                <span class="font-bold text-emerald-600" id="sum-pref">Por defecto</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between pt-4 border-t border-indigo-50/50">
+                        <button onclick="goToStep(2)" class="px-5 py-2 rounded-full text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all">
+                            Atrás
+                        </button>
+                        <button onclick="confirmBooking()" class="px-6 py-2.5 rounded-full text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 transition-all shadow-md shadow-emerald-600/10">
+                            Confirmar Reserva <i class="fa-solid fa-circle-check ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Booking Success Screen -->
+                <div id="booking-success" class="hidden text-center py-10 space-y-6">
+                    <div class="h-16 w-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto">
+                        <i class="fa-solid fa-heart-circle-check"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-indigo-950">¡Tu Cita está Reservada y Protegida!</h3>
+                        <p class="text-slate-500 text-sm mt-1 max-w-md mx-auto">
+                            Te enviamos una Historia Social adaptada con fotos de la sala y de tu terapeuta para que puedas mostrársela a tu hijo antes de la cita.
+                        </p>
+                    </div>
+                    <div class="bg-[#FAF6F0] p-6 rounded-2xl border border-indigo-50 max-w-md mx-auto text-left space-y-2 text-xs">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Código de Turno:</span>
+                            <span class="font-mono text-emerald-600 font-bold" id="succ-code">#T-3928</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Padre/Madre:</span>
+                            <span class="font-bold text-indigo-950" id="succ-parent">Mariana</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Pequeño:</span>
+                            <span class="font-bold text-indigo-950" id="succ-child">Mateo</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Fecha y Hora:</span>
+                            <span class="font-bold text-indigo-950" id="succ-time">2026-07-21, 11:00 AM</span>
+                        </div>
+                    </div>
+                    <button onclick="resetBooking()" class="px-5 py-2.5 bg-indigo-900 hover:bg-indigo-800 text-white rounded-full text-xs font-bold transition-all">
+                        Agendar otra sesión
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-indigo-950 text-indigo-200 py-12 border-t border-indigo-900 mt-auto text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-indigo-900 pb-8">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 shadow-md">
+                        <i class="fa-solid fa-dove text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold text-white tracking-tight font-serif block">TribuCalma</span>
+                        <span class="text-[9px] block font-semibold text-emerald-400 tracking-widest uppercase -mt-1.5">Neurodiversidad con Amor</span>
+                    </div>
+                </div>
+
+                <!-- Footer Quick Links -->
+                <div class="flex flex-wrap justify-center gap-6 text-xs font-medium">
+                    <a href="#tratamientos" class="hover:text-white transition-colors">Terapias</a>
+                    <a href="#horarios" class="hover:text-white transition-colors">Disponibilidad</a>
+                    <a href="#padres" class="hover:text-white transition-colors">Consejos para Padres</a>
+                    <a href="#reservas" class="hover:text-white transition-colors">Agendar</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 text-xs text-indigo-400">
+                <p>&copy; 2026 TribuCalma. Todos los derechos reservados. Creado con empatía para familias extraordinarias.</p>
+                <p class="italic text-[10px] text-emerald-400">"El ritmo de cada mente es hermoso."</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- FLOATING AI CHATBOX (Wilson, empathetic therapist companion) -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <!-- Chat trigger button -->
+        <button onclick="toggleWilsonChat()" id="chat-trigger-btn" class="h-14 w-14 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center shadow-2xl hover:scale-105 transition-all relative">
+            <i class="fa-solid fa-comment-dots text-2xl"></i>
+            <!-- Active notification badge -->
+            <span class="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-amber-400 animate-ping"></span>
+            <span class="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-amber-500"></span>
+        </button>
+
+        <!-- Chat main box (hidden by default) -->
+        <div id="wilson-chat-panel" class="hidden absolute bottom-16 right-0 w-[350px] sm:w-[380px] h-[480px] bg-white rounded-2xl border border-indigo-100 shadow-2xl flex flex-col justify-between overflow-hidden">
+            <!-- Header -->
+            <div class="bg-indigo-900 text-white p-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="h-9 w-9 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs relative">
+                        <i class="fa-solid fa-face-smile text-lg"></i>
+                        <span class="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-400 border border-indigo-900"></span>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold block leading-none">Wilson, Asistente de Tribu</h4>
+                        <span class="text-[10px] text-emerald-300 font-light mt-0.5 block">Compañero empático para padres</span>
+                    </div>
+                </div>
+                <button onclick="toggleWilsonChat()" class="text-indigo-200 hover:text-white transition-colors">
+                    <i class="fa-solid fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Messages area -->
+            <div class="flex-grow p-4 overflow-y-auto space-y-3 bg-[#FAF6F0] custom-scrollbar text-xs" id="chat-messages-container">
+                <!-- Wilson original welcome greeting -->
+                <div class="flex gap-2.5 items-start max-w-[85%]">
+                    <div class="h-6 w-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 text-[10px]">
+                        <i class="fa-solid fa-user-doctor"></i>
+                    </div>
+                    <div class="bg-white border border-indigo-50 p-3 rounded-2xl rounded-tl-none shadow-sm">
+                        <p class="text-slate-600 font-light">
+                            ¡Hola! Soy <strong>Wilson</strong>. Estoy aquí para escucharte y guiarte con amor y empatía. ❤️
+                        </p>
+                        <p class="text-slate-600 font-light mt-1.5">
+                            ¿Tienes dudas de nuestras terapias sensoriales, horarios protectores, o quieres algún consejo práctico de crianza neurodivergente? Dime lo que te inquieta.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inputs & triggers -->
+            <div class="p-3 bg-white border-t border-indigo-100 flex gap-2 items-center">
+                <input type="text" id="user-chat-input" onkeydown="handleChatEnter(event)" class="flex-grow bg-[#FAF6F0] border border-indigo-50 rounded-full px-4 py-2 text-xs focus:border-emerald-500 focus:ring-0" placeholder="Escribe tu consulta a Wilson...">
+                <button onclick="sendChatMessage()" class="h-8 w-8 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center shrink-0 transition-transform hover:scale-105">
+                    <i class="fa-solid fa-paper-plane text-xs"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUDIO FOR CALMING SENSORY HUM -->
+    <audio id="sensory-hum-player" loop>
+        <!-- Generative dynamic oscillator sound simulated in JS, fallback empty source here -->
+    </audio>
+
+    
+    <script>
+        // Accessibility and state managers
+        let activeContrast = false;
+        let activeTextSize = false;
+        let soundActive = false;
+        let audioCtx = null;
+        let oscNode = null;
+        let gainNode = null;
+
+        // Custom Accessible modes toggles
+        function toggleAccessibility(mode) {
+            if (mode === 'contrast') {
+                activeContrast = !activeContrast;
+                if (activeContrast) {
+                    document.body.classList.add('high-contrast');
+                } else {
+                    document.body.classList.remove('high-contrast');
+                }
+            } else if (mode === 'text-size') {
+                activeTextSize = !activeTextSize;
+                if (activeTextSize) {
+                    document.body.classList.add('large-text');
+                } else {
+                    document.body.classList.remove('large-text');
+                }
+            }
+        }
+
+        // Calming ambient sensory hum generator (Web Audio API)
+        function playSensoryHum() {
+            const btn = document.getElementById('sound-btn');
+            
+            if (!soundActive) {
+                try {
+                    // Create beautiful, soothing low-frequency white/brown noise or pure sinusodial dynamic warm wave
+                    if (!audioCtx) {
+                        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    }
+                    
+                    oscNode = audioCtx.createOscillator();
+                    gainNode = audioCtx.createGain();
+                    
+                    // Soothing low resonance frequency (110Hz or 130Hz - therapeutic ground pitch)
+                    oscNode.type = 'triangle';
+                    oscNode.frequency.setValueAtTime(110, audioCtx.currentTime);
+                    
+                    // Very soft low volume level
+                    gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                    
+                    // Connect nodes
+                    oscNode.connect(gainNode);
+                    gainNode.connect(audioCtx.destination);
+                    
+                    oscNode.start();
+                    soundActive = true;
+                    btn.className = "px-2.5 py-1 rounded bg-emerald-600 hover:bg-emerald-700 transition-all font-medium flex items-center gap-1 text-white";
+                    btn.innerHTML = `<i class="fa-solid fa-volume-high"></i> Sonando Calma`;
+                } catch (e) {
+                    console.error("Audio Context no soportado en este navegador: ", e);
+                }
+            } else {
+                if (oscNode) {
+                    oscNode.stop();
+                    oscNode.disconnect();
+                }
+                soundActive = false;
+                btn.className = "px-2.5 py-1 rounded bg-indigo-800 hover:bg-indigo-700 transition-all font-medium flex items-center gap-1 text-indigo-200";
+                btn.innerHTML = `<i class="fa-solid fa-volume-low"></i> Ruido Blanco`;
+            }
+        }
+
+        // Interactive Treatment Detail Panel Toggles
+        function toggleTreatmentDetail(key) {
+            const detail = document.getElementById(`detail-${key}`);
+            const card = document.getElementById(`card-${key}`);
+            
+            if (detail.classList.contains('hidden')) {
+                detail.classList.remove('hidden');
+                card.classList.add('border-emerald-500', 'shadow-md');
+            } else {
+                detail.classList.add('hidden');
+                card.classList.remove('border-emerald-500', 'shadow-md');
+            }
+        }
+
+        // Parent Tip Filter Engine
+        function filterTips(category) {
+            // Adjust active tab classes
+            document.querySelectorAll('.tips-tab').forEach(tab => {
+                tab.className = "tips-tab px-5 py-2 rounded-full font-bold text-xs bg-[#FAF6F0] text-slate-600 hover:bg-indigo-50 transition-all";
+            });
+
+            const activeTab = document.getElementById(`tab-${category}`);
+            if (activeTab) {
+                if (category === 'autismo') activeTab.className = "tips-tab px-5 py-2 rounded-full font-bold text-xs bg-emerald-100 text-emerald-800 transition-all";
+                if (category === 'tdah') activeTab.className = "tips-tab px-5 py-2 rounded-full font-bold text-xs bg-indigo-100 text-indigo-800 transition-all";
+                if (category === 'sensorial') activeTab.className = "tips-tab px-5 py-2 rounded-full font-bold text-xs bg-amber-100 text-amber-800 transition-all";
+            }
+
+            // Hide/Show tip cards
+            document.querySelectorAll('.tip-card').forEach(card => {
+                if (card.classList.contains(category)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+
+        // Booking State Machine
+        let bookingState = {
+            service: 'Integración Sensorial',
+            details: 'Sesión de juego sensorial y regulación',
+            date: '2026-07-21',
+            time: '11:00 AM',
+            prefs: [],
+            parentName: '',
+            childDesc: '',
+            parentEmail: '',
+            childNotes: ''
+        };
+
+        function selectService(name, desc) {
+            bookingState.service = name;
+            bookingState.details = desc;
+
+            // Update selector visuals
+            document.querySelectorAll('.service-option').forEach(opt => {
+                opt.className = "service-option cursor-pointer bg-[#FAF6F0] border-2 border-transparent rounded-2xl p-5 hover:border-emerald-500/50 transition-all flex flex-col justify-between";
+                const badge = opt.querySelector('.badge-sel');
+                if (badge) {
+                    badge.className = "badge-sel hidden";
+                }
+            });
+
+            let selectedId = 'srv-opt-sensory';
+            if (name === 'Lenguaje y CAA') selectedId = 'srv-opt-speech';
+            if (name === 'Acompañamiento Ocupacional') selectedId = 'srv-opt-occupational';
+
+            const activeCard = document.getElementById(selectedId);
+            activeCard.className = "service-option cursor-pointer bg-[#FAF6F0] border-2 border-emerald-500 rounded-2xl p-5 hover:border-emerald-500 transition-all flex flex-col justify-between";
+            const activeBadge = activeCard.querySelector('.badge-sel');
+            if (activeBadge) {
+                activeBadge.className = "badge-sel block text-emerald-600 font-bold";
+            }
+        }
+
+        function goToStep(step) {
+            // Hide all steps
+            document.getElementById('booking-step-1').classList.add('hidden');
+            document.getElementById('booking-step-2').classList.add('hidden');
+            document.getElementById('booking-step-3').classList.add('hidden');
+
+            // Reset tab highlights
+            document.getElementById('step-tab-1').className = "border-b-2 border-transparent pb-2 text-slate-400 font-bold text-xs sm:text-sm";
+            document.getElementById('step-tab-2').className = "border-b-2 border-transparent pb-2 text-slate-400 font-bold text-xs sm:text-sm";
+            document.getElementById('step-tab-3').className = "border-b-2 border-transparent pb-2 text-slate-400 font-bold text-xs sm:text-sm";
+
+            if (step === 1) {
+                document.getElementById('booking-step-1').classList.remove('hidden');
+                document.getElementById('step-tab-1').className = "border-b-2 border-emerald-500 pb-2 text-emerald-600 font-bold text-xs sm:text-sm";
+            } else if (step === 2) {
+                document.getElementById('booking-step-2').classList.remove('hidden');
+                document.getElementById('step-tab-2').className = "border-b-2 border-emerald-500 pb-2 text-emerald-600 font-bold text-xs sm:text-sm";
+            } else if (step === 3) {
+                // Populate summary data
+                bookingState.date = document.getElementById('booking-date').value;
+                bookingState.time = document.getElementById('booking-time').value;
+
+                // Collect checkboxes
+                let selectedPrefs = [];
+                if (document.getElementById('pref-light').checked) selectedPrefs.push("Luces bajas");
+                if (document.getElementById('pref-sound').checked) selectedPrefs.push("Sin música");
+                
+                bookingState.prefs = selectedPrefs;
+
+                // Write to Step 3 Summary
+                document.getElementById('sum-srv').innerText = bookingState.service;
+                document.getElementById('sum-time').innerText = `${bookingState.date}, ${bookingState.time}`;
+                
+                const childDescInput = document.getElementById('child-desc').value.trim();
+                document.getElementById('sum-child').innerText = childDescInput ? childDescInput : "No especificado aún";
+                
+                document.getElementById('sum-pref').innerText = selectedPrefs.length > 0 ? selectedPrefs.join(" y ") : "Ninguno";
+
+                document.getElementById('booking-step-3').classList.remove('hidden');
+                document.getElementById('step-tab-3').className = "border-b-2 border-emerald-500 pb-2 text-emerald-600 font-bold text-xs sm:text-sm";
+            }
+        }
+
+        function confirmBooking() {
+            const pName = document.getElementById('parent-name').value.trim();
+            const pEmail = document.getElementById('parent-email').value.trim();
+            const cDesc = document.getElementById('child-desc').value.trim();
+
+            if (!pName || !pEmail || !cDesc) {
+                alert("Por favor completa los nombres y correo electrónico para poder agendar tu sesión de forma segura.");
+                return;
+            }
+
+            bookingState.parentName = pName;
+            bookingState.parentEmail = pEmail;
+            bookingState.childDesc = cDesc;
+            bookingState.childNotes = document.getElementById('child-notes').value.trim();
+
+            // Transition to Success State
+            document.getElementById('booking-step-3').classList.add('hidden');
+            document.getElementById('step-tab-1').parentElement.classList.add('hidden'); // Hide progress bar on success
+
+            // Populate invoice
+            document.getElementById('succ-code').innerText = `#TC-${Math.floor(1000 + Math.random() * 9000)}`;
+            document.getElementById('succ-parent').innerText = bookingState.parentName;
+            document.getElementById('succ-child').innerText = bookingState.childDesc;
+            document.getElementById('succ-time').innerText = `${bookingState.date} a las ${bookingState.time}`;
+
+            document.getElementById('booking-success').classList.remove('hidden');
+        }
+
+        function resetBooking() {
+            document.getElementById('booking-success').classList.add('hidden');
+            document.getElementById('step-tab-1').parentElement.classList.remove('hidden');
+            
+            // Empty inputs
+            document.getElementById('parent-name').value = '';
+            document.getElementById('parent-email').value = '';
+            document.getElementById('child-desc').value = '';
+            document.getElementById('child-notes').value = '';
+            document.getElementById('pref-light').checked = false;
+            document.getElementById('pref-sound').checked = false;
+
+            goToStep(1);
+        }
+
+        
+        // Wilson Chat Toggle Panel
+        function toggleWilsonChat() {
+            const chatPanel = document.getElementById('wilson-chat-panel');
+            if (chatPanel.classList.contains('hidden')) {
+                chatPanel.classList.remove('hidden');
+            } else {
+                chatPanel.classList.add('hidden');
+            }
+        }
+
+        function handleChatEnter(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        // Gemini API real integration for Wilson the Expert Companion
+        async function sendChatMessage() {
+            const inputEl = document.getElementById('user-chat-input');
+            const userMsgText = inputEl.value.trim();
+
+            if (!userMsgText) return;
+
+            // Clear input box
+            inputEl.value = '';
+
+            // Render user bubble in UI
+            renderBubble(userMsgText, 'user');
+
+            // Render temporary Wilson typing placeholder
+            const placeholderId = renderTypingPlaceholder();
+
+            try {
+                // Call Gemini Live Text generation API using gemini-3-flash-preview
+                const apiKey = ""; // Leave empty so Canvas injects key dynamically at runtime
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+                const systemPrompt = "Eres Wilson, el asistente e intelectual experto de TribuCalma, una plataforma de apoyo e información para padres con niños neurodivergentes (TEA, TDAH, Trastorno del Procesamiento Sensorial). Tu tono debe ser extremadamente empático, cálido, calmante, comprensivo y sin tecnicismos complejos de medicina. Ayuda a responder las dudas de crianza, a explicar el valor de la anticipación de historias visuales o a dar explicaciones amigables sobre nuestras terapias sensoriales, terapia ocupacional y terapia del lenguaje. Mantén tus respuestas concisas y divididas en párrafos legibles para padres estresados. No menciones ITIL, software empresarial o términos ajenos a la infancia.";
+
+                const payload = {
+                    contents: [{ parts: [{ text: userMsgText }] }],
+                    systemInstruction: {
+                        parts: [{ text: systemPrompt }]
+                    }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error("API call response error");
+                }
+
+                const data = await response.json();
+                const aiResponseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                // Remove typing skeleton and print real response
+                removePlaceholder(placeholderId);
+                if (aiResponseText) {
+                    renderBubble(aiResponseText, 'wilson');
+                } else {
+                    renderFallbackResponse(placeholderId);
+                }
+
+            } catch (error) {
+                console.error("Wilson AI API Error: ", error);
+                // Remove placeholder and show a high quality empathetic fallback response locally
+                removePlaceholder(placeholderId);
+                renderLocalFallback(userMsgText);
+            }
+        }
+
+        // Helpers to draw Chat bubbles
+        function renderBubble(text, sender) {
+            const container = document.getElementById('chat-messages-container');
+            const bubbleWrap = document.createElement('div');
+            
+            if (sender === 'user') {
+                bubbleWrap.className = "flex justify-end gap-2.5 max-w-[85%] ml-auto";
+                bubbleWrap.innerHTML = `
+                    <div class="bg-indigo-900 text-white p-3 rounded-2xl rounded-tr-none shadow-sm font-light">
+                        <p>${text}</p>
+                    </div>
+                `;
+            } else {
+                bubbleWrap.className = "flex gap-2.5 items-start max-w-[85%]";
+                bubbleWrap.innerHTML = `
+                    <div class="h-6 w-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 text-[10px]">
+                        <i class="fa-solid fa-user-doctor"></i>
+                    </div>
+                    <div class="bg-white border border-indigo-50 p-3 rounded-2xl rounded-tl-none shadow-sm">
+                        <p class="text-slate-600 font-light">${markdownToSimpleHtml(text)}</p>
+                    </div>
+                `;
+            }
+
+            container.appendChild(bubbleWrap);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function renderTypingPlaceholder() {
+            const container = document.getElementById('chat-messages-container');
+            const placeholderId = 'typing-' + Date.now();
+            const bubbleWrap = document.createElement('div');
+            bubbleWrap.id = placeholderId;
+            bubbleWrap.className = "flex gap-2.5 items-start max-w-[85%]";
+            bubbleWrap.innerHTML = `
+                <div class="h-6 w-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 text-[10px]">
+                    <i class="fa-solid fa-user-doctor"></i>
+                </div>
+                <div class="bg-white border border-indigo-50 p-3 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-1">
+                    <span class="h-2 w-2 rounded-full bg-slate-400 animate-bounce"></span>
+                    <span class="h-2 w-2 rounded-full bg-slate-400 animate-bounce" style="animation-delay: 0.2s"></span>
+                    <span class="h-2 w-2 rounded-full bg-slate-400 animate-bounce" style="animation-delay: 0.4s"></span>
+                </div>
+            `;
+            container.appendChild(bubbleWrap);
+            container.scrollTop = container.scrollHeight;
+            return placeholderId;
+        }
+
+        function removePlaceholder(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+
+        // Empathy-centered smart local fallbacks if API Key or Internet fails
+        function renderLocalFallback(query) {
+            const q = query.toLowerCase();
+            let reply = "Entiendo perfectamente tu inquietud, madre/padre. Criar a un niño neurodivergente puede generar muchas dudas.";
+
+            if (q.includes('autismo') || q.includes('tea')) {
+                reply = "El autismo no es una enfermedad que requiera cura; es una manera hermosa y única de procesar el mundo. En TribuCalma, nuestros terapeutas se enfocan en comprender sus intereses y sensibilidades especiales, usando pictogramas e integración de juego libre.";
+            } else if (q.includes('tdah') || q.includes('hiperactividad') || q.includes('atencion')) {
+                reply = "Para el TDAH, el juego guiado y estructurado de baja frustración es sumamente reparador. Te sugiero usar temporizadores visuales en casa para que tu pequeño pueda anticipar cuándo termina una actividad y cuándo empieza otra sin generar roces.";
+            } else if (q.includes('cita') || q.includes('reserva') || q.includes('horario') || q.includes('turno')) {
+                reply = "Nuestras citas normales duran 45 minutos y son de lunes a viernes de 8:00 AM a 7:00 PM y sábados de 9:00 AM a 2:00 PM. Puedes usar la sección de agendamiento arriba en la web o indicarme si necesitas algún día festivo especial.";
+            } else if (q.includes('sensorial') || q.includes('textura') || q.includes('ruido') || q.includes('sensible')) {
+                reply = "La hipersensibilidad sensorial es muy común. En nuestras salas regulamos luces a tonos cálidos y evitamos música estridente. Si tu pequeño se abruma con facilidad, te sugiero elegir los días martes o jueves en la mañana para sus sesiones.";
+            }
+
+            renderBubble(reply, 'wilson');
+        }
+
+        // Minimal markdown to clean HTML tags converter
+        function markdownToSimpleHtml(raw) {
+            return raw
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/`([^`]+)`/g, '<code class="bg-indigo-50 px-1 py-0.5 rounded text-xs">$1</code>')
+                .replace(/\n/g, '<br>');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITIL 4 - Guía Completa en Español | TribuCalma IT</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Lexend -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Lexend', sans-serif; background: #F8FAFC; color: #1E293B; }
+        .code-block { background: #1E293B; color: #E2E8F0; border-radius: 12px; padding: 1.25rem; font-size: 0.85rem; overflow-x: auto; }
+        .glossary-term { border-bottom: 2px dashed #6366F1; cursor: help; }
+        .section-card { background: white; border-radius: 20px; border: 1px solid #E2E8F0; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); transition: all 0.3s ease; }
+        .section-card:hover { box-shadow: 0 10px 25px -5px rgba(99,102,241,0.1); border-color: #A5B4FC; }
+        .principle-card { border-left: 4px solid; border-radius: 12px; padding: 1.25rem; background: white; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F1F5F9; }
+        ::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748B; }
+        .toc-link { transition: all 0.2s; }
+        .toc-link:hover { color: #4F46E5; padding-left: 4px; }
+    </style>
+</head>
+<body>
+
+    <!-- TOP NAV -->
+    <header class="bg-indigo-900 text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="hmtl.html" class="flex items-center gap-2 group">
+                    <div class="h-9 w-9 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700">
+                        <i class="fa-solid fa-dove text-sm"></i>
+                    </div>
+                    <span class="font-bold text-sm">TribuCalma <span class="text-indigo-300 font-light">| ITIL 4</span></span>
+                </a>
+                <nav class="flex items-center gap-4 text-xs font-medium">
+                    <a href="hmtl.html" class="text-indigo-200 hover:text-white transition-colors flex items-center gap-1">
+                        <i class="fa-solid fa-arrow-left"></i> Volver a TribuCalma
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-10">
+
+            <!-- SIDEBAR - TABLE OF CONTENTS -->
+            <aside class="lg:col-span-3 hidden lg:block">
+                <div class="sticky top-24 space-y-1">
+                    <h4 class="text-xs font-bold text-indigo-900 uppercase tracking-wider mb-3">Contenido</h4>
+                    <a href="#intro" class="toc-link block text-xs text-slate-500 py-1">📖 Introducción</a>
+                    <a href="#sistema-valor" class="toc-link block text-xs text-slate-500 py-1">⚙️ SVS</a>
+                    <a href="#4-dimensiones" class="toc-link block text-xs text-slate-500 py-1">📐 4 Dimensiones</a>
+                    <a href="#cadena-valor" class="toc-link block text-xs text-slate-500 py-1">🔗 Cadena de Valor</a>
+                    <a href="#7-practicas" class="toc-link block text-xs text-slate-500 py-1">📋 7 Prácticas Clave</a>
+                    <a href="#34-practicas" class="toc-link block text-xs text-slate-500 py-1">📚 Las 34 Prácticas</a>
+                    <a href="#principios-guia" class="toc-link block text-xs text-slate-500 py-1">🌟 7 Principios Guía</a>
+                    <a href="#certificaciones" class="toc-link block text-xs text-slate-500 py-1">🎓 Certificaciones</a>
+                    <a href="#itil-vs-agile" class="toc-link block text-xs text-slate-500 py-1">🤝 ITIL + Agile/DevOps</a>
+                    <a href="#glosario" class="toc-link block text-xs text-slate-500 py-1">📖 Glosario</a>
+                    <a href="#tribucalma-itil" class="toc-link block text-xs text-slate-500 py-1">🏥 ITIL en TribuCalma</a>
+                </div>
+            </aside>
+
+            <!-- MAIN CONTENT -->
+            <main class="lg:col-span-9 space-y-10">
+
+                <!-- HERO -->
+                <div class="text-center py-8">
+                    <span class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-bold uppercase">Documentación Técnica</span>
+                    <h1 class="text-4xl sm:text-5xl font-extrabold text-indigo-950 mt-4 leading-tight">
+                        ITIL 4 — Framework de <span class="text-indigo-600">Gestión de Servicios TI</span>
+                    </h1>
+                    <p class="text-slate-500 text-base mt-4 max-w-3xl mx-auto font-light">
+                        Guía completa, actualizada y en español del marco de mejores prácticas para la gestión de servicios de TI. 
+                        Desde los fundamentos hasta la integración con Agile, DevOps y Lean.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-4 mt-6 text-xs">
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-medium">📅 Publicado: 2019 (v4)</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-medium">🏢 Axelos</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-medium">🌍 Global Standard</span>
+                    </div>
+                </div>
+
+                <!-- 1. INTRODUCCIÓN -->
+                <section id="intro">
+                    <div class="section-card">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="h-10 w-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center">📖</span>
+                            <h2 class="text-2xl font-bold text-indigo-950">¿Qué es ITIL 4?</h2>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            <strong>ITIL (Information Technology Infrastructure Library)</strong> es el marco de referencia más adoptado globalmente para la 
+                            <strong>Gestión de Servicios de TI (ITSM)</strong>. ITIL 4, publicado por Axelos en 2019, es la evolución más importante del framework, 
+                            pasando de un enfoque basado en procesos (ITIL v3) a un modelo basado en <strong>valor</strong> y <strong>co-creación</strong>.
+                        </p>
+                        <div class="mt-6 grid md:grid-cols-3 gap-4">
+                            <div class="bg-indigo-50 rounded-xl p-4 text-center">
+                                <span class="text-3xl font-black text-indigo-600">2019</span>
+                                <p class="text-xs text-slate-500 mt-1">Publicación ITIL 4</p>
+                            </div>
+                            <div class="bg-indigo-50 rounded-xl p-4 text-center">
+                                <span class="text-3xl font-black text-indigo-600">34</span>
+                                <p class="text-xs text-slate-500 mt-1">Prácticas de Gestión</p>
+                            </div>
+                            <div class="bg-indigo-50 rounded-xl p-4 text-center">
+                                <span class="text-3xl font-black text-indigo-600">7</span>
+                                <p class="text-xs text-slate-500 mt-1">Principios Guía</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-900">
+                            <strong>🎯 Diferencia clave con ITIL v3:</strong> ITIL 4 no solo se enfoca en procesos, sino en la 
+                            <strong>creación de valor</strong> conjunto entre proveedor y cliente, integrando prácticas modernas como 
+                            Agile, DevOps, Lean y CI/CD.
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. SISTEMA DE VALOR DEL SERVICIO (SVS) -->
+                <section id="sistema-valor">
+                    <div class="section-card">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="h-10 w-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">⚙️</span>
+                            <h2 class="text-2xl font-bold text-indigo-950">Sistema de Valor del Servicio (SVS)</h2>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            El <strong>SVS (Service Value System)</strong> describe cómo todos los componentes y actividades de la organización 
+                            trabajan juntos como un sistema para facilitar la <strong>creación de valor</strong>.
+                        </p>
+                        <div class="mt-6 grid md:grid-cols-2 gap-4">
+                            <div class="principle-card border-l-indigo-500 bg-indigo-50/30">
+                                <h4 class="font-bold text-indigo-900 text-sm">1. Principios Guía</h4>
+                                <p class="text-xs text-slate-500 mt-1">Recomendaciones que guían la toma de decisiones.</p>
+                            </div>
+                            <div class="principle-card border-l-emerald-500 bg-emerald-50/30">
+                                <h4 class="font-bold text-emerald-900 text-sm">2. Gobernanza</h4>
+                                <p class="text-xs text-slate-500 mt-1">Cómo la organización es dirigida y controlada.</p>
+                            </div>
+                            <div class="principle-card border-l-amber-500 bg-amber-50/30">
+                                <h4 class="font-bold text-amber-900 text-sm">3. Cadena de Valor del Servicio</h4>
+                                <p class="text-xs text-slate-500 mt-1">Conjunto de actividades para crear valor.</p>
+                            </div>
+                            <div class="principle-card border-l-rose-500 bg-rose-50/30">
+                                <h4 class="font-bold text-rose-900 text-sm">4. Prácticas</h4>
+                                <p class="text-xs text-slate-500 mt-1">34 prácticas de gestión organizadas en 3 categorías.</p>
+                            </div>
+                            <div class="principle-card border-l-purple-500 bg-purple-50/30">
+                                <h4 class="font-bold text-purple-900 text-sm">5. Mejora Continua</h4>
+                                <p class="text-xs text-slate-500 mt-1">Modelo de mejora continua en todos los niveles.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. LAS 4 DIMENSIONES -->
+                <section id="4-dimensiones">
+                    <div class="section-card">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="h-10 w-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">📐</span>
+                            <h2 class="text-2xl font-bold text-indigo-950">Las 4 Dimensiones de ITIL 4</h2>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed mb-6">
+                            ITIL 4 define <strong>4 dimensiones</strong> que deben ser consideradas para un enfoque holístico de la gestión de servicios.
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="bg-gradient-to-br from-indigo-50 to-white rounded-2xl p-6 border border-indigo-100">
+                                <span class="text-3xl mb-3 block">👥</span>
+                                <h3 class="font-bold text-indigo-950 mb-2">Organizaciones y Personas</h3>
+                                <ul class="text-xs text-slate-500 space-y-1.5">
+                                    <li>• Cultura organizacional</li>
+                                    <li>• Roles, responsabilidades y competencias</li>
+                                    <li>• Estilos de liderazgo y comunicación</li>
+                                    <li>• Gestión del talento y capacitación</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-6 border border-emerald-100">
+                                <span class="text-3xl mb-3 block">💻</span>
+                                <h3 class="font-bold text-indigo-950 mb-2">Información y Tecnología</h3>
+                                <ul class="text-xs text-slate-500 space-y-1.5">
+                                    <li>• Sistemas de información y datos</li>
+                                    <li>• Arquitectura tecnológica</li>
+                                    <li>• Automatización e IA</li>
+                                    <li>• Seguridad de la información</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gradient-to-br from-amber-50 to-white rounded-2xl p-6 border border-amber-100">
+                                <span class="text-3xl mb-3 block">🤝</span>
+                                <h3 class="font-bold text-indigo-950 mb-2">Socios y Proveedores</h3>
+                                <ul class="text-xs text-slate-500 space-y-1.5">
+                                    <li>• Contratos y acuerdos de nivel de servicio (SLA)</li>
+                                    <li>• Gestión de terceros y outsourcing</li>
+                                    <li>• Integración de cadenas de suministro</li>
+                                    <li>• Alianzas estratégicas</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gradient-to-br from-rose-50 to-white rounded-2xl p-6 border border-rose-100">
+                                <span class="text-3xl mb-3 block">🔄</span>
+                                <h3 class="font-bold text-indigo-950 mb-2">Flujos de Valor y Procesos</h3>
+                                <ul class="text-xs text-slate-500 space-y-1.5">
+                                    <li>• Mapeo de flujos de valor</li>
+                                    <li>• Optimización de procesos</li>
+                                    <li>• Automatización de flujos de trabajo</li>
+                                    <li>• Métricas y medición de desempeño</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. CADENA DE VALOR -->
+                <section id="cadena-valor">
+                    <div class="section-card">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="h-10 w-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">🔗</span>
+                            <h2 class="text-2xl font-bold text-indigo-950">Cadena de Valor del Servicio</h2>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed mb-6">
+                            La <strong>Service Value Chain</strong> es un modelo operativo que describe 6 actividades clave para crear valor:
+                        </p>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            <div class="bg-indigo-50 rounded-xl p-4 text-center">
+                                <span class="text-2xl">📋</span>
+                                <h4 class="font-bold text-xs text-indigo-900 mt-2">Plan</h4>
+                                <p class="text-[10px] text-slate-500">Planificar la estrategia</p>
+                            </div>
+                            <div class="bg-emerald-50 rounded-xl p-4 text-center">
+                                <span class="text-2xl">💡</span>
+                                <h4 class="font-bold text-xs text-emerald-900 mt-2">Mejorar</h4>
+                                <p class="text-[10px] text-slate-500">Mejora continua</p>
+                            </div>
+                            <div class="bg-amber-50 rounded-xl p-4 text-center">
+                                <span class="text-2xl">🤝</span>
+                                <h4 class="font-bold text-xs text-amber-900 mt-2">Comprometer</h4>
+                                <p class="text-[10px] text-slate-500">Relación con clientes</p>
+                            </div>
+                            <div class="bg-rose-50 rounded-xl p-4 text-center">
+                                <span class="text-2xl">🎯</span>
+                                <h4 class="font-bold text-xs text-rose-900 mt-2">Diseñar y Transicionar</h4>
+                                <p class="text-[10px] text-slate-500">Nuevos servicios</p>
+                            </div>
+                            <div class="bg-purple-50 rounded-xl p-4 text-center">
+                                <span class="text-2xl">🚀</span>
+                                <h4 class="font-bold text-xs text-purple-900 mt-2">Obtener/Construir</h4>
+                                <p class="text-[10px] text-slate-500">Adquisición y desarrollo</p>
+                            </div>
+                            <div class="bg-cyan-50 rounded-xl p-4 text-center">
+                                <span class="text-2xl">✅</span>
+                                <h4 class="font-bold text-xs text-cyan-900 mt-2">Entregar y Soportar</h4>
+                                <p class="text-[10px] text-slate-500">Entrega y soporte</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. 7 PRÁCTICAS CLAVE -->
+                <section id="7-practicas">
+                    <div class="section-card">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="h-10 w-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center">📋</span>
+                            <h2 class="text-2xl font-bold text-indigo-950">Las 7 Prácticas Clave de ITIL 4</h2>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed mb-6">
+                            Aunque ITIL 4 define <strong>34 prácticas</strong>, estas 7 son consideradas las más críticas para la mayoría de organizaciones:
+                        </p>
+                        <div class="space-y-4">
+                            <div class="bg-white border border-slate-200 rounded-xl p-5 hover:border-indigo-300 transition-all">
+                                <div class="flex items-start gap-4">
+                                    <span class="h-10 w-10 rounded-lg bg-red-100 text-red-600 flex items-center justify-center shrink-0 text-lg">🔥</span>
+                                    <div>
+                                        <h4 class="font-bold text-indigo-950">1. Gestión de Incidentes</h4>
+                                        <p class="text-xs text-slate-500 mt-1">Minimizar el impacto negativo de incidentes restaurando el servicio normal lo antes posible. Incluye la gestión de quejas y soporte técnico.</p>
+                                        <div class="mt-2 flex flex-wrap gap-2">
+                                            <span class="text-[10px] bg-red-50 text-red-700 px-2 py-0.5 rounded-full">Prioridad Alta</span>
+                                            <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">SLA: 4h</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white border border-slate-200 rounded-xl p-5 hover:border-indigo-300 transition-all">
+                                <div class="flex items-start gap-4">
+                                    <span class="h-10 w-10 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center shrink-0 text-lg">🔍</span>
+                                    <div>
+                                        <h4 class="font-bold text-indigo-950">2. Gestión de Problemas</h4>
+                                        <p class="text-xs text-slate-500 mt-1">Identificar las causas raíz de los incidentes para prevenir recurrencias. Diferencia clave: Incidente ≠ Problema.</p>
+                                        <div class="mt-2 flex flex-wrap gap-2">
+                                            <span class="text-[10px] bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full">Análisis RCA</span>
+                                            <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">Preventivo</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white border border-slate-200 rounded-xl p-5 hover:border-indigo-300 transition-all">
+                                <div class="flex items-start gap-4">
+                                    <span class="h-10 w-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 text-lg">🔄</span>
+                                    <div>
+                                        <h4 class="font-bold text-indigo-950">3. Gestión de Cambios</h4>
+                                        <p class="text-xs text-slate-500 mt-1">Controlar el ciclo de vida de todos los cambios, permitiendo cambios beneficiosos con mínima interrupción. Tipos: Normal, Estándar, Emergencia.</p>
+                                        <div class="mt-2 flex flex-wrap gap-2">
+                                            <span class="text-[10px] bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full">CAB</span>
+                                            <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">Change Advisory Board</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white border border-slate-200 rounded-xl p-5 hover:border-indigo-300 transition-all">
+                                <div class="flex items-start gap-4">
+                                    <span class="h-10 w-10 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center shrink-0 text-lg">📦</span>
+                                    <div>
+                                        <h4 class="font-bold text-indigo-950">4. Gestión de Activos de Servicio y Configuración (SACM)</h4>
+                                        <p class="text-xs text-slate-500 mt-1">Gestionar, controlar y proteger los activos de servicio y los CI (Configuration Items) durante su ciclo de vida.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white border border-slate-200 rounded-xl p-5 hover:border-indigo-300 transition-all">
+                                <div class="flex items-start gap-4">
+                                    <span class="h-10 w-10 rounded-lg bg-green-100 text-green-600 flex items-center justify-center shrink-0 text-lg">📊</span>
+                                    <div>
+                                        <h4 class="font-bold text-indigo-950">5. Gestión de Niveles de Servicio (SLM)</h4>
+                                        <p class="text-xs text-slate-500 mt-1">Definir, negociar, monitorear y reportar los niveles de servicio (SLA, OLA, UC). Asegura que el servicio cumple con lo acordado.</p>
+                                        <div class="mt-2 flex flex-wrap gap-2">
+                                            <span class="text-[10px] bg-green-50 text-green-700 px-2 py-0.5 rounded-full">SLA</span>
+                                            <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">OLA</span>
+                                            <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">UC</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white border border-slate-200 rounded-xl p-5 hover:border-indigo-300 transition-all">
+                                <div class="flex items-start gap-4">
+                                    <span class="h-10 w-10 rounded-lg bg-yellow-100 text-yellow-600 flex items-center justify-center shrink-0 text-lg">🎫</span>
+                                    <div>
+                                        <h4 class="font-bold text-indigo-950">6. Gestión de Solicitudes (Request Fulfillment)</h4>
+                                        <p class="text-xs text-slate-500 mt-1">Gestionar las solicitudes predefinidas de los usuarios (cambios estándar, consultas, pedidos de información).</p>
+                                        <div class="mt-2 flex flex-wrap gap-2">
+                                            <span class="text-[10px] bg-yellow-50 text-yellow-700 px-2 py-0.5 rounded-full">Self-Service</span>
+                                            <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">Portal</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white border border-slate-200 rounded-xl p-5 hover:border-indigo-300 transition-all">
+                                <div class="flex items-start gap-4">
+                                    <span class="h-10 w-10 rounded-lg bg-cyan-100 text-cyan-600 flex items-center justify-center shrink-0 text-lg">🎧</span>
+                                    <div>
+                                        <h4 class="font-bold text-indigo-950">7. Centro de Servicio (Service Desk)</h4>
+                                        <p class="text-xs text-slate-500 mt-1">Punto único de contacto (SPOC) entre el proveedor de servicios y los usuarios. Gestiona incidentes y solicitudes.</p>
+                                        <div class="mt-2 flex flex-wrap gap-2">
+                                            <span class="text-[10px] bg-cyan-50 text-cyan-700 px-2 py-0.5 rounded-full">SPOC</span>
+                                            <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">N1/N2/N3</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. LAS 34 PRÁCTICAS -->
+                <section id="34-practicas">
+                    <div class="section-card">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="h-10 w-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center">📚</span>
+                            <h2 class="text-2xl font-bold text-indigo-950">Las 34 Prácticas de ITIL 4</h2>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed mb-6">
+                            ITIL 4 organiza las prácticas en <strong>3 categorías</strong>:
+                        </p>
+
+                        <!-- Prácticas Generales de Gestión -->
+                        <details class="group mb-4">
+                            <summary class="cursor-pointer bg-indigo-50 rounded-xl p-4 font-bold text-indigo-900 flex items-center justify-between">
+                                <span>🏢 Prácticas Generales de Gestión (14)</span>
+                                <i class="fa-solid fa-chevron-down group-open:rotate-180 transition-transform"></i>
+                            </summary>
+                            <div class="mt-3 grid md:grid-cols-2 gap-2 text-xs text-slate-600">
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de la Estrategia</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Portafolio</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de la Relación</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Riesgos</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de la Seguridad de la Información</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión del Conocimiento</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión Financiera</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Proveedores</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Capacidad y Rendimiento</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de la Disponibilidad</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de la Continuidad del Servicio</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de la Configuración</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Cambios Organizacionales</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Mejora Continua</span>
+                            </div>
+                        </details>
+
+                        <!-- Prácticas de Gestión de Servicios -->
+                        <details class="group mb-4">
+                            <summary class="cursor-pointer bg-emerald-50 rounded-xl p-4 font-bold text-emerald-900 flex items-center justify-between">
+                                <span>🛠️ Prácticas de Gestión de Servicios (17)</span>
+                                <i class="fa-solid fa-chevron-down group-open:rotate-180 transition-transform"></i>
+                            </summary>
+                            <div class="mt-3 grid md:grid-cols-2 gap-2 text-xs text-slate-600">
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Incidentes</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Solicitudes</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Problemas</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Cambios</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Activos de Servicio</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Niveles de Servicio</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Centro de Servicio</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Despliegues</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Liberaciones</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Validación y Pruebas</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Catálogo de Servicios</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de la Demanda</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Eventos</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Monitoreo y Eventos</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Infraestructura y Plataformas</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Desarrollo de Software</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Operaciones de TI</span>
+                            </div>
+                        </details>
+
+                        <!-- Prácticas Técnicas -->
+                        <details class="group">
+                            <summary class="cursor-pointer bg-amber-50 rounded-xl p-4 font-bold text-amber-900 flex items-center justify-between">
+                                <span>🔧 Prácticas Técnicas (3)</span>
+                                <i class="fa-solid fa-chevron-down group-open:rotate-180 transition-transform"></i>
+                            </summary>
+                            <div class="mt-3 grid md:grid-cols-3 gap-2 text-xs text-slate-600">
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Despliegues</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Infraestructura y Plataformas</span>
+                                <span class="bg-white p-2 rounded-lg border border-slate-100">Gestión de Desarrollo de Software</span>
+                            </div>
+                        </details>
+                    </div>
+                </section>
+
+                <!-- 7. PRINCIPIOS GUÍA -->
+                <section id="principios-guia">
+                    <div class="section-card">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="h-10 w-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">🌟</span>
+                            <h2 class="text-2xl font-bold text-indigo-950">Los 7 Principios Guía</h2>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-gradient-to-r from-indigo-50 to-white rounded-xl p-4 flex items-start gap-4">
+                                <span class="h-8 w-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold shrink-0 text-sm">1</span>
+                                <div>
+                                    <h4 class="font-bold text-indigo-950 text-sm">Enfocarse en el Valor</h4>
+                                    <p class="text-xs text-slate-500">Todo lo que hace la organización debe estar alineado con la creación de valor para los stakeholders.</p>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-r from-emerald-50 to-white rounded-xl p-4 flex items-start gap-4">
+                                <span class="h-8 w-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold shrink-0 text-sm">2</span>
+                                <div>
+                                    <h4 class="font-bold text-indigo-950 text-sm">Comenzar donde estás</h4>
+                                    <p class="text-xs text-slate-500">No reinventes la rueda. Aprovecha lo que ya existe y mejora desde allí.</p>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-r from-amber-50 to-white rounded-xl p-4 flex items-start gap-4">
+                                <span class="h-8 w-8 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center font-bold shrink-0 text-sm">3</span>
+                                <div>
+                                    <h4 class="font-bold text-indigo-950 text-sm">Progresar iterativamente con retroalimentación</h4>
+                                    <p class="text-xs text-slate-500">Usa ciclos cortos de feedback, mejora continua y entregas incrementales.</p>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-r from-rose-50 to-white rounded-xl p-4 flex items-start gap-4">
+                                <span class="h-8 w-8 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center font-bold shrink-0 text-sm">4</span>
+                                <div>
+                                    <h4 class="font-bold text-indigo-950 text-sm">Colaborar y promover visibilidad</h4>
+                                    <p class="text-xs text-slate-500">La colaboración entre equipos reduce silos y aumenta la transparencia.</p>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-r from-purple-50 to-white rounded-xl p-4 flex items-start gap-4">
+                                <span class="h-8 w-8 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center font-bold shrink-0 text-sm">5</span>
+                                <div>
+                                    <h4 class="font-bold text-indigo-950 text-sm">Pensar y trabajar de manera holística</h4>
+                                    <p class="text-xs text-slate-500">Ninguna práctica o proceso opera de forma aislada. Todo está conectado.</p>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-r from-cyan-50 to-white rounded-xl p-4 flex items-start gap-4">
+                                <span class="h-8 w-8 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold shrink-0 text-sm">6</span>
+                                <div>
+                                    <h4 class="font-bold text-indigo-950 text-sm">Mantenerlo simple y práctico</h4>
+                                    <p class="text-xs text-slate-500">Si no aporta valor, elimínalo. La simplicidad es la máxima sofisticación.</p>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-r from-teal-50 to-white rounded-xl p-4 flex items-start gap-4">
+                                <span class="h-8 w-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold shrink-0 text-sm">7</span>
+                                <div>
+                                    <h4 class="font-bold text-indigo-950 text-sm">Optimizar y automatizar</h4>
+                                    <p class="text-xs text-slate-500">Maximiza el valor del trabajo humano mediante la automatización de tareas repetitivas.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 8. CERTIFICACIONES -->
+                <section id="certificaciones">
+                    <div class="section-card">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="h-10 w-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">🎓</span>
+                            <h2 class="text-2xl font-bold text-indigo-950">Certificaciones ITIL 4</h2>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="bg-white border border-slate-200 rounded-xl p-5 flex items-start gap-4">
+                                <span class="h-10 w-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold shrink-0">1</span>
+                                <div>
+                                    <h4 class="font-bold text-indigo-950">ITIL 4 Foundation</h4>
+                                    <p class="text-xs text-slate-500 mt-1">Nivel de entrada. Cubre los conceptos básicos, el SVS, las 4 dimensiones y las 34 prácticas. <strong>Duración: 2 días | Examen: 60 min | Pase: 65%</strong></p>
+                                </div>
+                            </div>
+                            <div class="bg-white border border-slate-200 rounded-xl p-5 flex items-start gap-4">
+                                <span class="h-10 w-10 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center font-bold shrink-0">2</span>
+                                <div>
+                                    <h4 class="font-bold text-indigo-950">ITIL 4 Managing Professional (MP) — 4 módulos</h4>
+                                    <p class="text-xs text-slate-500 mt-1">
+                                        <strong>CDS:</strong> Crear, Entregar y Soportar<br>
+                                        <strong>DSV:</strong> Impulsar el Cambio Estratégico<br>
+                                        <strong>HVIT:</strong> Alta Velocidad en TI<br>
+                                        <strong>DPI:</strong> Planificar, Implementar y Controlar
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="bg-white border border-slate-200 rounded-xl p-5 flex items-start gap-4">
+                                <span class="h-10 w-10 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center font-bold shrink-0">3</span>
+                                <div>
+                                    <h4 class="font-bold text-indigo-950">ITIL 4 Strategic Leader (SL) — 2 módulos</h4>
+                                    <p class="text-xs text-slate-500 mt-1">
+                                        <strong>DPI:</strong> Planificar, Implementar y Controlar (compartido con MP)<br>
+                                        <strong>DTL:</strong> Liderazgo Digital y de TI
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="bg-white border border-slate-200 rounded-xl p-5 flex items-start gap-4">
+                                <span class="h-10 w-10 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center font-bold shrink-0">4</span>
+                                <div>
+                                    <h4 class="font-bold text-indigo-950">ITIL 4 Master</h4>
+                                    <p class="text-xs text-slate-500 mt-1">Nivel más alto. Requiere haber completado MP + SL + demostrar aplicación práctica.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 9. ITIL + AGILE/DEVOPS -->
+                <section id="itil-vs-agile">
+                    <div class="section-card">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="h-10 w-10 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center">🤝</span>
+                            <h2 class="text-2xl font-bold text-indigo-950">ITIL 4 + Agile / DevOps / Lean</h2>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            ITIL 4 fue diseñado específicamente para integrarse con metodologías modernas:
+                        </p>
+                        <div class="mt-6 grid md:grid-cols-3 gap-4">
+                            <div class="bg-blue-50 rounded-xl p-5 text-center">
+                                <span class="text-3xl">🔄</span>
+                                <h4 class="font-bold text-blue-900 mt-2 text-sm">Agile + ITIL 4</h4>
+                                <p class="text-xs text-slate-500 mt-1">Sprints para mejora continua, entregas incrementales de servicios, retrospectivas para CSI.</p>
+                            </div>
+                            <div class="bg-teal-50 rounded-xl p-5 text-center">
+                                <span class="text-3xl">⚡</span>
+                                <h4 class="font-bold text-teal-900 mt-2 text-sm">DevOps + ITIL 4</h4>
+                                <p class="text-xs text-slate-500 mt-1">Integración continua, despliegue continuo, automatización de cambios estándar, monitoreo en tiempo real.</p>
+                            </div>
+                            <div class="bg-amber-50 rounded-xl p-5 text-center">
+                                <span class="text-3xl">📉</span>
+                                <h4 class="font-bold text-amber-900 mt-2 text-sm">Lean + ITIL 4</h4>
+                                <p class="text-xs text-slate-500 mt-1">Eliminación de desperdicios, mapa de flujo de valor, optimización de procesos y reducción de cuellos de botella.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 10. GLOSARIO -->
+                <section id="glosario">
+                    <div class="section-card">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="h-10 w-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">📖</span>
+                            <h2 class="text-2xl font-bold text-indigo-950">Glosario ITIL 4</h2>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-3 text-xs">
+                            <div class="bg-white p-3 rounded-xl border border-slate-100">
+                                <span class="font-bold text-indigo-900">SVS</span>
+                                <p class="text-slate-500 mt-0.5">Service Value System — Sistema de Valor del Servicio</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-100">
+                                <span class="font-bold text-indigo-900">SLA</span>
+                                <p class="text-slate-500 mt-0.5">Service Level Agreement — Acuerdo de Nivel de Servicio</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-100">
+                                <span class="font-bold text-indigo-900">CI</span>
+                                <p class="text-slate-500 mt-0.5">Configuration Item — Elemento de Configuración</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-100">
+                                <span class="font-bold text-indigo-900">CMS</span>
+                                <p class="text-slate-500 mt-0.5">Configuration Management System</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-100">
+                                <span class="font-bold text-indigo-900">CSI</span>
+                                <p class="text-slate-500 mt-0.5">Continual Service Improvement — Mejora Continua</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-100">
+                                <span class="font-bold text-indigo-900">CAB</span>
+                                <p class="text-slate-500 mt-0.5">Change Advisory Board — Comité Asesor de Cambios</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-100">
+                                <span class="font-bold text-indigo-900">SPOC</span>
+                                <p class="text-slate-500 mt-0.5">Single Point of Contact — Punto Único de Contacto</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-100">
+                                <span class="font-bold text-indigo-900">KPI</span>
+                                <p class="text-slate-500 mt-0.5">Key Performance Indicator — Indicador Clave</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-100">
+                                <span class="font-bold text-indigo-900">OLA</span>
+                                <p class="text-slate-500 mt-0.5">Operational Level Agreement — Acuerdo de Nivel Operativo</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-100">
+                                <span class="font-bold text-indigo-900">UC</span>
+                                <p class="text-slate-500 mt-0.5">Underpinning Contract — Contrato de Soporte</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-100">
+                                <span class="font-bold text-indigo-900">RCA</span>
+                                <p class="text-slate-500 mt-0.5">Root Cause Analysis — Análisis de Causa Raíz</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-100">
+                                <span class="font-bold text-indigo-900">PDCA</span>
+                                <p class="text-slate-500 mt-0.5">Plan-Do-Check-Act — Ciclo de mejora</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-100">
+                                <span class="font-bold text-indigo-900">ITSM</span>
+                                <p class="text-slate-500 mt-0.5">IT Service Management — Gestión de Servicios TI</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-100">
+                                <span class="font-bold text-indigo-900">RACI</span>
+                                <p class="text-slate-500 mt-0.5">Responsible, Accountable, Consulted, Informed — Matriz de roles</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 11. ITIL EN TRIBUCALMA -->
+                <section id="tribucalma-itil">
+                    <div class="section-card border-2 border-emerald-200 bg-gradient-to-br from-emerald-50 to-white">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="h-10 w-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">🏥</span>
+                            <h2 class="text-2xl font-bold text-indigo-950">ITIL 4 Aplicado a TribuCalma</h2>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed mb-6">
+                            En TribuCalma, aplicamos los principios de ITIL 4 para garantizar un <strong>servicio de calidad, confiable y centrado en el valor</strong> para las familias neurodivergentes.
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-white rounded-xl p-4 border border-emerald-100">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="h-7 w-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs">🎧</span>
+                                    <h4 class="font-bold text-sm text-indigo-950">Service Desk (Wilson)</h4>
+                                </div>
+                                <p class="text-xs text-slate-500">Punto único de contacto para padres. Gestión de consultas, incidentes y solicitudes con prioridades y SLAs.</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 border border-emerald-100">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="h-7 w-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs">📊</span>
+                                    <h4 class="font-bold text-sm text-indigo-950">SLM (Niveles de Servicio)</h4>
+                                </div>
+                                <p class="text-xs text-slate-500">SLAs definidos para cada terapia. Tiempos de respuesta, duración de sesiones y garantías de calidad.</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 border border-emerald-100">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="h-7 w-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs">🎫</span>
+                                    <h4 class="font-bold text-sm text-indigo-950">Request Fulfillment</h4>
+                                </div>
+                                <p class="text-xs text-slate-500">Portal de agendamiento de citas como solicitudes de servicio estandarizadas con confirmación automatizada.</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 border border-emerald-100">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="h-7 w-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs">🔄</span>
+                                    <h4 class="font-bold text-sm text-indigo-950">Gestión de Cambios</h4>
+                                </div>
+                                <p class="text-xs text-slate-500">Política clara de reprogramación de citas con tipos de cambio (Normal, Estándar, Emergencia).</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 border border-emerald-100">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="h-7 w-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs">🔥</span>
+                                    <h4 class="font-bold text-sm text-indigo-950">Gestión de Incidentes</h4>
+                                </div>
+                                <p class="text-xs text-slate-500">Canal de reporte de incidencias durante citas con matriz de prioridades y escalamiento.</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 border border-emerald-100">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="h-7 w-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs">📈</span>
+                                    <h4 class="font-bold text-sm text-indigo-950">Mejora Continua (CSI)</h4>
+                                </div>
+                                <p class="text-xs text-slate-500">Feedback loop post-sesión para mejorar servicios. Encuestas, métricas y planes de acción.</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 text-center">
+                            <a href="hmtl.html" class="inline-flex items-center px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full text-sm font-bold transition-all shadow-md">
+                                <i class="fa-solid fa-arrow-left mr-2"></i> Volver a TribuCalma — Ver ITIL en acción
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FOOTER -->
+                <div class="text-center py-8 border-t border-slate-200">
+                    <p class="text-xs text-slate-400">Documentación ITIL 4 creada para TribuCalma — 2026 | Basada en Axelos ITIL 4 Foundation</p>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+</body>
+</html>
+

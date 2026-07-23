@@ -1,0 +1,80 @@
+/* ============================================
+   TribuCalma ITIL 4 — Accessibility Styles
+   ============================================ */
+
+/* High Contrast Mode */
+.high-contrast {
+    background-color: #111827 !important;
+    color: #F9FAFB !important;
+}
+
+.high-contrast .section-card,
+.high-contrast .bg-white,
+.high-contrast .bg-slate-50,
+.high-contrast .bg-indigo-50,
+.high-contrast .bg-emerald-50,
+.high-contrast .bg-amber-50,
+.high-contrast .bg-rose-50 {
+    background-color: #1F2937 !important;
+    border-color: #D1D5DB !important;
+    color: #F9FAFB !important;
+}
+
+.high-contrast p,
+.high-contrast span,
+.high-contrast label,
+.high-contrast h1,
+.high-contrast h2,
+.high-contrast h3,
+.high-contrast h4 {
+    color: #FFFFFF !important;
+}
+
+.high-contrast button,
+.high-contrast select,
+.high-contrast input,
+.high-contrast textarea {
+    background-color: #374151 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+.high-contrast a {
+    color: #38BDF8 !important;
+}
+
+/* Large Text Mode */
+.large-text p,
+.large-text li,
+.large-text span {
+    font-size: 1.15rem !important;
+    line-height: 1.8 !important;
+}
+
+.large-text h2 {
+    font-size: 2.25rem !important;
+}
+
+.large-text h3 {
+    font-size: 1.75rem !important;
+}
+
+/* Focus Styles */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #6366F1;
+    outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+

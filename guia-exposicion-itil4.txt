@@ -1,0 +1,117 @@
+🎤 GUÍA DE EXPOSICIÓN - TRIBUCALMA + ITIL 4
+============================================
+4 Integrantes · 10-15 min · Para impactar al profe
+
+──────────────────────────────────────────────────
+PERSONA 1 - INTRODUCCIÓN (2-3 min)
+──────────────────────────────────────────────────
+"Buenos días profe. Somos [nombre del grupo] y les vamos a presentar 
+TribuCalma, un centro de terapia para niños neurodivergentes que aplica 
+ITIL 4 para gestionar sus servicios de manera profesional."
+
+🎯 Puntos clave:
+• TribuCalma ofrece: Integración Sensorial, Lenguaje y CAA, 
+  Terapia Ocupacional y Apoyo Socio-Emocional
+• Aplicamos ITIL 4 porque nos permite dar servicios con calidad 
+  medible, SLAs garantizados y mejora continua
+• La página web funciona como un sistema de gestión de servicios (SGS)
+
+👉 MOSTRAR: La página en el navegador, sección HERO (SVS)
+"Acá ven el Sistema de Valor del Servicio con los principios ITIL: 
+enfocarse en el valor, SLA garantizado y mejora continua."
+
+──────────────────────────────────────────────────
+PERSONA 2 - SERVICE CATALOG + SLAs (3-4 min)
+──────────────────────────────────────────────────
+"Les voy a mostrar cómo gestionamos nuestro catálogo de servicios 
+y los acuerdos de nivel, que es la práctica de Service Catalog 
+Management y Service Level Management de ITIL 4."
+
+🎯 Puntos clave:
+• Tenemos 4 servicios con SLAs entre 96% y 99%
+• Cada servicio tiene KPI, precio y métricas de calidad
+• Los SLAs están divididos en 3 categorías:
+  - Tiempo de respuesta (98.7% cumplimiento)
+  - Solicitudes (99.2% cumplimiento)  
+  - Cambios (97.5% cumplimiento)
+• Los datos están centralizados en un archivo config.js
+
+👉 MOSTRAR EN PÁGINA: Sección Catálogo + Sección SLAs
+"Hagan clic en cualquier servicio para ver detalles del SLA."
+
+──────────────────────────────────────────────────
+PERSONA 3 - SOLICITUDES + INCIDENTES + CAMBIOS (4-5 min)
+──────────────────────────────────────────────────
+"Ahora les muestro las 3 prácticas operativas más importantes."
+
+🎯 SOLICITUDES (Request Fulfillment):
+"Solicitar un servicio toma 3 pasos: elegir servicio, agendar fecha 
+y poner datos. El sistema genera un Ticket ID automático. 
+El SLA promete confirmación en menos de 30 minutos."
+👉 MOSTRAR: Sección Solicitudes, hacer el wizard rápido
+
+🎯 INCIDENTES (Incident Management):
+"Si algo sale mal, el cliente reporta un incidente y según la 
+prioridad tenemos tiempos de respuesta definidos:
+  - Crítica: 15 min
+  - Alta: 30 min
+  - Media: 2 horas
+  - Baja: 8 horas
+
+Si un incidente se repite, lo convertimos en Problema 
+y hacemos análisis de causa raíz (RCA)."
+👉 MOSTRAR: Sección Incidentes, cambiar prioridad
+
+🎯 CAMBIOS (Change Management):
+"Para cambios de agenda tenemos 3 tipos según ITIL 4:
+  - Estándar (>48h aviso, sin costo)
+  - Normal (<48h, 15% cargo)
+  - Emergencia (fuerza mayor, sin cargo)"
+👉 MOSTRAR: Sección Cambios
+
+──────────────────────────────────────────────────
+PERSONA 4 - SERVICE DESK + CSI + CIERRE (3-4 min)
+──────────────────────────────────────────────────
+
+🎯 SERVICE DESK:
+"Tenemos a Wilson, nuestro Service Desk con inteligencia artificial 
+usando GPT-4 de OpenRouter. Wilson conoce todos los servicios, 
+SLAs, precios y políticas. Es el SPOC (Single Point of Contact) 
+para los clientes. Pueden preguntarle sobre servicios, agendar, 
+reportar incidentes o consultar SLAs."
+👉 MOSTRAR: Abrir Wilson Chat, preguntar "Qué servicios tienen?"
+  "Cuáles son sus SLAs?"
+  "Quiero agendar una cita"
+
+🎯 MEJORA CONTINUA (CSI):
+"Después del servicio, los clientes califican con estrellas.
+Mostramos KPIs en vivo: CSAT 96%, NPS 72, FCR 88%, MTTR 1.2h.
+Aplicamos el ciclo PDCA: cada feedback se analiza, se planifica 
+una mejora, se implementa y se mide el resultado."
+👉 MOSTRAR: Sección Mejora Continua, calificar con estrellas
+
+🎯 ACCESIBILIDAD:
+"Para cumplir con la dimensión de Organizaciones y Personas, 
+la página tiene: modo alto contraste, texto grande y ruido 
+blanco sensorial para niños con hipersensibilidad auditiva."
+👉 MOSTRAR: Botones de accesibilidad en la barra superior
+
+🎯 CIERRE:
+"En resumen profe, TribuCalma demuestra que ITIL 4 no es solo 
+para empresas de TI, sino que se puede aplicar a cualquier 
+organización que preste servicios. Nosotros lo aplicamos a 
+terapia infantil con un sistema completo, modular, con SLAs, 
+Service Desk con IA y mejora continua. ¿Preguntas?"
+
+──────────────────────────────────────────────────
+💡 TIPS PARA IMPACTAR AL PROFE
+──────────────────────────────────────────────────
+• Mencionar palabras clave: SVS, SLAs, CSI, PDCA, SPOC, RCA, 
+  Request Fulfillment, Change Management, Service Catalog
+• Decir que el código está MODULAR (separado en archivos) 
+  y tiene TESTS UNITARIOS — eso demuestra calidad profesional
+• Mencionar que los datos están CENTRALIZADOS en config.js
+  (eso muestra buen diseño arquitectónico)
+• Wilson con IA siempre causa buena impresión
+• La accesibilidad muestra que pensaron en todos los usuarios
+

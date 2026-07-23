@@ -1,0 +1,36 @@
+PRÁCTICAS ITIL 4 APLICADAS - TRIBUCALMA
+========================================
+
+1. SERVICE CATALOG MANAGEMENT
+   → js/services.js - 4 servicios con SLA, KPI y precio
+
+2. SERVICE LEVEL MANAGEMENT (SLM)
+   → data/config.js - SLAs: Respuesta 98.7%, Solicitudes 99.2%, Cambios 97.5%
+
+3. SERVICE REQUEST MANAGEMENT
+   → js/booking.js - Solicitudes en 3 pasos + Ticket ID
+
+4. INCIDENT MANAGEMENT
+   → js/incidents.js - 4 prioridades (Crítica 15min → Baja 8h)
+
+5. CHANGE MANAGEMENT
+   → js/changes.js - 3 tipos: Estándar, Normal, Emergencia
+
+6. SERVICE DESK
+   → js/wilson-chat.js - Wilson con IA (OpenRouter GPT-4o-mini)
+
+7. CONTINUAL IMPROVEMENT (CSI)
+   → js/feedback.js - Estrellas + KPIs (CSAT 96%, NPS 72)
+a
+8. SERVICE VALUE SYSTEM (SVS)
+   → hmtl.html - 7 principios guía aplicados
+
+9. KNOWLEDGE MANAGEMENT
+   → itil4-documentacion.html - Guía ITIL 4 completa
+
+10. PROBLEM MANAGEMENT
+    → Referenciado en Incidentes (Incidente repetido → RCA)
+
+11. 4 DIMENSIONES + ACCESIBILIDAD
+    → css/accessibility.css + js/main.js - Contraste, texto grande, ruido blanco
+
