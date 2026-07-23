@@ -643,13 +643,16 @@
             sendChatMessage();
         }
 
+        // Configura aquí la URL de tu backend en Render
+        const WILSON_API_URL = 'https://tribucalma-backend.onrender.com/api/chat';
+
         async function sendChatMessage() {
             var el = document.getElementById('user-chat-input'), txt = el.value.trim();
             if(!txt) return;
             el.value = ''; renderBubble(txt, 'user');
             var pid = renderTypingPlaceholder();
             try {
-                var resp = await fetch('/api/chat', {
+                var resp = await fetch(WILSON_API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message: txt })
