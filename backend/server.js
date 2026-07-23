@@ -18,6 +18,15 @@ app.get('/', (req, res) => {
     res.json({ status: 'ok', service: 'TribuCalma Wilson API', version: '1.0.0' });
 });
 
+// GET /api/chat — muestra instrucciones (útil para verificar que Render funciona)
+app.get('/api/chat', (req, res) => {
+    res.json({
+        status: 'ready',
+        message: 'Wilson Chat API funcionando. Envía un POST con {"message": "..."} para chatear.',
+        docs: 'POST /api/chat con Content-Type: application/json y body: { "message": "tu mensaje" }'
+    });
+});
+
 // Ruta del chat
 app.post('/api/chat', async (req, res) => {
     const { message } = req.body;
