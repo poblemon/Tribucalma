@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "TribuCalma - ITIL 4 ITSM Platform for Neurodivergent Therapy",
   "engines": {
-    "node": "18.x"
+    "node": "22.x"
   }
 }
 
