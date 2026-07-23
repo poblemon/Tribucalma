@@ -623,11 +623,7 @@
             }
         }
 
-        // WILSON CHAT - OpenRouter
-        // Obtén tu API Key gratuita en https://openrouter.ai/keys
-        const DEFAULT_OPENROUTER_KEY = ''; // ← Reemplázala o configúrala en la UI
-        function getActiveKey() { return getSavedKey() || DEFAULT_OPENROUTER_KEY; }
-
+        // WILSON CHAT — Ahora usa el proxy API de Vercel (seguro, sin exponer keys)
         function toggleWilsonChat() {
             document.getElementById('wilson-chat-panel').classList.toggle('hidden');
             updateApiKeyStatus();
@@ -653,26 +649,15 @@
             el.value = ''; renderBubble(txt, 'user');
             var pid = renderTypingPlaceholder();
             try {
-                var resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                var resp = await fetch('/api/chat', {
                     method: 'POST',
-                    headers: {
-                        'Authorization': 'Bearer ' + getActiveKey(),
-                        'Content-Type': 'application/json',
-                        'HTTP-Referer': 'https://tribucalma.app',
-                        'X-Title': 'TribuCalma - Wilson'
-                    },
-                    body: JSON.stringify({
-                        model: 'openai/gpt-4o-mini',
-                        messages: [
-                            { role: 'system', content: 'Eres WILSON, Service Desk Agent de TribuCalma. TribuCalma es un centro de terapia para ninos neurodivergentes que aplica ITIL 4 para ITSM. Servicios: 1) Integracion Sensorial ($45, SLA 98%), 2) Lenguaje y CAA ($50, SLA 97%), 3) Terapia Ocupacional ($48, SLA 96%), 4) Apoyo Socio-Emocional ($55, SLA 99%). SLAs: Consultas <2h, Incidentes criticos 15min, Solicitudes <1h, Recordatorio 24h, Historia social 48h. Cambios: Estandar (>48h sin costo), Normal (<48h 15%), Emergencia (sin cargo). Incidentes: Critica <15min, Alta <30min, Media <2h, Baja <8h. CSI: CSAT 96%, NPS 72, FCR 88%, MTTR 1.2h. Se EMPATICO y CALIDO. Responde SIEMPRE en espanol.' },
-                            { role: 'user', content: txt }
-                        ]
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: txt })
                 });
                 if(!resp.ok) throw new Error('API Error ' + resp.status);
-                var data = await resp.json(), aiText = data.choices?.[0]?.message?.content;
+                var data = await resp.json();
                 removePlaceholder(pid);
-                if(aiText && aiText.trim()) { renderBubble(aiText.trim(), 'wilson'); return; }
+                if(data.response && data.response.trim()) { renderBubble(data.response.trim(), 'wilson'); return; }
                 throw new Error('Vacio');
             } catch(e) {
                 console.error(e); removePlaceholder(pid);
